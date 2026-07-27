@@ -9,7 +9,7 @@ public class SplashController {
 
     @FXML
     public void initialize() {
-        PauseTransition delay = new PauseTransition(Duration.seconds(20));
+        PauseTransition delay = new PauseTransition(Duration.seconds(5));
         delay.setOnFinished(e -> SceneManager.switchScene("login.fxml"));
         delay.play();
     }
