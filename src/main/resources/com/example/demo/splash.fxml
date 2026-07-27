@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox alignment="CENTER" spacing="14.0" prefHeight="800.0" prefWidth="1280.0"
+      style="-fx-background-color: linear-gradient(to bottom right, #1C2130, #26314F);"
+      xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.demo.controller.SplashController">
+
+    <ImageView fitWidth="96.0" fitHeight="96.0" preserveRatio="true">
+        <image>
+            <Image url="@images/logo.png" />
+        </image>
+    </ImageView>
+
+    <Label text="ExpenseTracker" style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: white;" />
+    <Label text="Track smarter. Spend wiser." style="-fx-font-size: 13px; -fx-text-fill: #8C919E;" />
+
+    <ProgressBar prefWidth="200.0" style="-fx-accent: #3868F2;" />
+
+</VBox>

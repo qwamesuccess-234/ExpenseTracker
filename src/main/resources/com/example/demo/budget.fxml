@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: #F5F6FA;"
+            xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.demo.controller.BudgetController">
+
+    <center>
+        <VBox spacing="20.0">
+            <padding><Insets top="32.0" left="36.0" right="36.0" /></padding>
+            <children>
+                <Label text="Budget" style="-fx-font-size: 22px; -fx-font-weight: bold;" />
+
+                <HBox spacing="20.0">
+                    <children>
+                        <VBox spacing="14.0" prefWidth="400.0" prefHeight="300.0" style="-fx-background-color: white; -fx-background-radius: 14; -fx-padding: 24;">
+                            <children>
+                                <Label text="Set Monthly Budget" style="-fx-font-size: 15px; -fx-font-weight: bold;" />
+                                <Label text="Period" style="-fx-font-size: 12px; -fx-text-fill: #8C919E;" />
+                                <ComboBox fx:id="periodCombo" maxWidth="Infinity" promptText="Monthly / Weekly" />
+                                <Label text="Budget Limit ($)" style="-fx-font-size: 12px; -fx-text-fill: #8C919E;" />
+                                <TextField fx:id="limitField" style="-fx-background-radius: 8; -fx-border-radius: 8; -fx-border-color: #E0E1E8; -fx-padding: 10;" />
+                                <Button text="Save Budget" onAction="#handleSaveBudget" style="-fx-background-color: #3868F2; -fx-text-fill: white; -fx-background-radius: 8; -fx-font-weight: bold; -fx-pref-height: 44;" maxWidth="Infinity" />
+                            </children>
+                        </VBox>
+
+                        <VBox spacing="14.0" prefWidth="528.0" prefHeight="300.0" style="-fx-background-color: white; -fx-background-radius: 14; -fx-padding: 24;">
+                            <children>
+                                <Label text="This Month's Progress" style="-fx-font-size: 15px; -fx-font-weight: bold;" />
+                                <ProgressBar fx:id="budgetProgressBar" prefWidth="480.0" prefHeight="18.0" style="-fx-accent: #3868F2;" />
+                                <Label fx:id="progressLabel" style="-fx-font-size: 13px; -fx-text-fill: #8C919E;" />
+                                <Label fx:id="remainingLabel" style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #21B373;" />
+                            </children>
+                        </VBox>
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+    </center>
+</BorderPane>

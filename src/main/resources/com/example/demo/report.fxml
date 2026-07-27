@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: #F5F6FA;"
+            xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.demo.controller.ReportController">
+
+    <left>
+        <VBox prefWidth="260.0" spacing="6.0" style="-fx-background-color: #1C2130;">
+            <padding><Insets top="32.0" left="20.0" right="20.0" /></padding>
+            <children>
+                <Label text="💰 ExpenseTracker" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: white;" />
+                <Region prefHeight="28.0" />
+                <Button text="Dashboard" maxWidth="Infinity" onAction="#goToDashboard" style="-fx-background-color: transparent; -fx-text-fill: #C0C2CB; -fx-alignment: CENTER_LEFT; -fx-padding: 12;" />
+                <Button text="Expenses" maxWidth="Infinity" onAction="#goToExpenseList" style="-fx-background-color: transparent; -fx-text-fill: #C0C2CB; -fx-alignment: CENTER_LEFT; -fx-padding: 12;" />
+                <Button text="Budget" maxWidth="Infinity" onAction="#goToBudget" style="-fx-background-color: transparent; -fx-text-fill: #C0C2CB; -fx-alignment: CENTER_LEFT; -fx-padding: 12;" />
+                <Button text="Reports" maxWidth="Infinity" style="-fx-background-color: #3868F2; -fx-text-fill: white; -fx-background-radius: 8; -fx-alignment: CENTER_LEFT; -fx-padding: 12;" />
+            </children>
+        </VBox>
+    </left>
+
+    <center>
+        <VBox spacing="20.0">
+            <padding><Insets top="32.0" left="36.0" right="36.0" /></padding>
+            <children>
+                <Label text="Reports" style="-fx-font-size: 22px; -fx-font-weight: bold;" />
+
+                <HBox spacing="12.0" alignment="CENTER_LEFT">
+                    <children>
+                        <Label text="From:" />
+                        <DatePicker fx:id="fromDatePicker" />
+                        <Label text="To:" />
+                        <DatePicker fx:id="toDatePicker" />
+                        <Button text="Apply" onAction="#handleApplyFilter" style="-fx-background-color: #3868F2; -fx-text-fill: white; -fx-background-radius: 8; -fx-padding: 8 16;" />
+                        <Region HBox.hgrow="ALWAYS" />
+                        <Button text="Export CSV" onAction="#handleExportCsv" style="-fx-background-color: white; -fx-border-color: #E0E1E8; -fx-background-radius: 8; -fx-padding: 8 16;" />
+                    </children>
+                </HBox>
+
+                <HBox spacing="20.0">
+                    <children>
+                        <VBox spacing="10.0" prefWidth="460.0" prefHeight="360.0" style="-fx-background-color: white; -fx-background-radius: 14; -fx-padding: 18;">
+                            <children>
+                                <Label text="Spending by Category" style="-fx-font-size: 14px; -fx-font-weight: bold;" />
+                                <PieChart fx:id="categoryPieChart" legendVisible="true" prefHeight="320.0" />
+                            </children>
+                        </VBox>
+
+                        <VBox spacing="10.0" prefWidth="468.0" prefHeight="360.0" style="-fx-background-color: white; -fx-background-radius: 14; -fx-padding: 18;">
+                            <children>
+                                <Label text="Monthly Trend (Last 6 Months)" style="-fx-font-size: 14px; -fx-font-weight: bold;" />
+                                <BarChart fx:id="trendBarChart" prefHeight="320.0" legendVisible="false">
+                                    <xAxis>
+                                        <CategoryAxis side="BOTTOM" />
+                                    </xAxis>
+                                    <yAxis>
+                                        <NumberAxis side="LEFT" />
+                                    </yAxis>
+                                </BarChart>
+                            </children>
+                        </VBox>
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+    </center>
+</BorderPane>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.Region?>
+
+<BorderPane prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: #F5F6FA;"
+            xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.demo.controller.DashboardController">
+
+    <left>
+        <VBox prefWidth="260.0" spacing="6.0" style="-fx-background-color: #1C2130;">
+            <padding><Insets top="32.0" left="20.0" right="20.0" /></padding>
+            <children>
+                <Label text="💰 ExpenseTracker" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: white;" />
+                <Region prefHeight="28.0" />
+                <Button text="Dashboard" maxWidth="Infinity" style="-fx-background-color: #3868F2; -fx-text-fill: white; -fx-background-radius: 8; -fx-alignment: CENTER_LEFT; -fx-padding: 12;" />
+                <Button text="Categories" maxWidth="Infinity" onAction="#goToCategories" style="-fx-background-color: #3868F2; -fx-text-fill: white; -fx-background-radius: 8; -fx-alignment: CENTER_LEFT; -fx-padding: 12;" />
+                <Button text="Expenses" maxWidth="Infinity" onAction="#goToExpenseList" style="-fx-background-color: transparent; -fx-text-fill: #C0C2CB; -fx-alignment: CENTER_LEFT; -fx-padding: 12;" />
+                <Button text="Budget" maxWidth="Infinity" onAction="#goToBudget" style="-fx-background-color: transparent; -fx-text-fill: #C0C2CB; -fx-alignment: CENTER_LEFT; -fx-padding: 12;" />
+                <Button text="Reports" maxWidth="Infinity" onAction="#goToReports" style="-fx-background-color: transparent; -fx-text-fill: #C0C2CB; -fx-alignment: CENTER_LEFT; -fx-padding: 12;" />
+                <Button text="Settings" maxWidth="Infinity" style="-fx-background-color: transparent; -fx-text-fill: #C0C2CB; -fx-alignment: CENTER_LEFT; -fx-padding: 12;" />
+                <Region VBox.vgrow="ALWAYS" />
+                <Button text="Logout" maxWidth="Infinity" onAction="#logout" style="-fx-background-color: transparent; -fx-text-fill: #E64D4D; -fx-alignment: CENTER_LEFT; -fx-padding: 12;" />
+            </children>
+        </VBox>
+    </left>
+
+    <center>
+        <VBox spacing="24.0">
+            <padding><Insets top="32.0" left="36.0" right="36.0" bottom="20.0" /></padding>
+            <children>
+                <Label fx:id="welcomeLabel" style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #1C2130;" />
+
+                <HBox spacing="20.0">
+                    <children>
+                        <VBox spacing="8.0" prefWidth="230.0" prefHeight="100.0" style="-fx-background-color: white; -fx-background-radius: 14; -fx-padding: 18;">
+                            <children>
+                                <Label text="Total Spent (This Month)" style="-fx-font-size: 12px; -fx-text-fill: #8C919E;" />
+                                <Label fx:id="totalSpentLabel" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #E64D4D;" />
+                            </children>
+                        </VBox>
+                        <VBox spacing="8.0" prefWidth="230.0" prefHeight="100.0" style="-fx-background-color: white; -fx-background-radius: 14; -fx-padding: 18;">
+                            <children>
+                                <Label text="Budget Remaining" style="-fx-font-size: 12px; -fx-text-fill: #8C919E;" />
+                                <Label text="760$" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #21B373;" />
+                            </children>
+                        </VBox>
+                    </children>
+                </HBox>
+
+                <VBox spacing="10.0" style="-fx-background-color: white; -fx-background-radius: 14; -fx-padding: 16;">
+                    <children>
+                        <HBox alignment="CENTER_LEFT">
+                            <children>
+                                <Label text="Recent Transactions" style="-fx-font-size: 14px; -fx-font-weight: bold;" />
+                                <Region HBox.hgrow="ALWAYS" />
+                                <Button text="+ Add Expense" onAction="#goToAddExpense" style="-fx-background-color: #3868F2; -fx-text-fill: white; -fx-background-radius: 8; -fx-font-weight: bold;" />
+                            </children>
+                        </HBox>
+                        <TableView fx:id="expenseTable" prefHeight="400.0">
+                            <columns>
+                                <TableColumn fx:id="dateColumn" text="Date" prefWidth="150.0" />
+                                <TableColumn fx:id="descriptionColumn" text="Description" prefWidth="300.0" />
+                                <TableColumn fx:id="categoryColumn" text="Category" prefWidth="180.0" />
+                                <TableColumn fx:id="amountColumn" text="Amount" prefWidth="150.0" />
+                            </columns>
+                        </TableView>
+                    </children>
+                </VBox>
+            </children>
+        </VBox>
+    </center>
+
+</BorderPane>

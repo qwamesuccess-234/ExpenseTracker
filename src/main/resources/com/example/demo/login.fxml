@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<StackPane prefHeight="800.0" prefWidth="1280.0"
+           style="-fx-background-color: linear-gradient(to bottom right, #1C2130, #26314F);"
+           xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="com.example.demo.controller.LoginController">
+
+    <VBox maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="487.0" prefWidth="398.0"
+          spacing="7.0" style="-fx-background-color: white; -fx-background-radius: 18; -fx-padding: 30;"
+          StackPane.alignment="CENTER">
+        <children>
+            <Label fx:id="error_message_txt" prefHeight="29.0" prefWidth="336.0" style="-fx-text-fill: #E64D4D;" />
+
+            <Label prefHeight="49.0" prefWidth="33.0" text="💰">
+                <font><Font size="33.0" /></font>
+            </Label>
+
+            <Label style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #1C2130;" text="Welcome back" />
+            <Label prefHeight="17.0" prefWidth="225.0" style="-fx-font-size: 13px; -fx-text-fill: #8C919E;" text="Log in to manage your expenses" />
+
+            <Label prefHeight="32.0" prefWidth="45.0" text="Email">
+                <padding><Insets top="15.0" /></padding>
+            </Label>
+            <TextField fx:id="emailField" prefHeight="34.0" prefWidth="338.0" promptText="Enter Email" style="-fx-background-radius: 5;" />
+
+            <Label alignment="BASELINE_LEFT" prefHeight="32.0" prefWidth="66.0" text="Password" />
+            <TextField fx:id="passwordField" prefHeight="34.0" prefWidth="338.0" promptText="Enter password" style="-fx-background-radius: 5;">
+                <VBox.margin><Insets top="-5.0" /></VBox.margin>
+            </TextField>
+
+            <Button fx:id="loginButton" mnemonicParsing="false" onAction="#handleLogin"
+                    prefHeight="35.0" prefWidth="337.0"
+                    style="-fx-background-radius: 8; -fx-background-color: blue;" text="Login" textFill="#ebe9e9">
+                <VBox.margin><Insets top="25.0" /></VBox.margin>
+                <font><Font name="System Bold" size="13.0" /></font>
+            </Button>
+
+            <Hyperlink fx:id="registerLink" alignment="CENTER" onAction="#goToRegister"
+                       prefHeight="23.0" prefWidth="332.0" text="Don't have an account? Register" />
+        </children>
+    </VBox>
+</StackPane>
