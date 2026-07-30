@@ -27,6 +27,7 @@
                 <Button text="Expenses" maxWidth="Infinity" onAction="#goToExpenseList" style="-fx-background-color: transparent; -fx-text-fill: #C0C2CB; -fx-alignment: CENTER_LEFT; -fx-padding: 12;" />
                 <Button text="Budget" maxWidth="Infinity" onAction="#goToBudget" style="-fx-background-color: transparent; -fx-text-fill: #C0C2CB; -fx-alignment: CENTER_LEFT; -fx-padding: 12;" />
                 <Button text="Reports" maxWidth="Infinity" style="-fx-background-color: #3868F2; -fx-text-fill: white; -fx-background-radius: 8; -fx-alignment: CENTER_LEFT; -fx-padding: 12;" />
+                <Button text="Categories" maxWidth="Infinity" onAction="#goToCategories" style="-fx-background-color: transparent; -fx-text-fill: #C0C2CB; -fx-alignment: CENTER_LEFT; -fx-padding: 12;" />
             </children>
         </VBox>
     </left>
@@ -62,12 +63,8 @@
                             <children>
                                 <Label text="Monthly Trend (Last 6 Months)" style="-fx-font-size: 14px; -fx-font-weight: bold;" />
                                 <BarChart fx:id="trendBarChart" prefHeight="320.0" legendVisible="false">
-                                    <xAxis>
-                                        <CategoryAxis side="BOTTOM" />
-                                    </xAxis>
-                                    <yAxis>
-                                        <NumberAxis side="LEFT" />
-                                    </yAxis>
+                                    <xAxis><CategoryAxis side="BOTTOM" /></xAxis>
+                                    <yAxis><NumberAxis side="LEFT" /></yAxis>
                                 </BarChart>
                             </children>
                         </VBox>

@@ -4,6 +4,7 @@ import com.example.demo.model.Category;
 import com.example.demo.model.Expense;
 import com.example.demo.repo.CategoryRepo;
 import com.example.demo.service.ExpenseService;
+import com.example.demo.util.AlertUtil;
 import com.example.demo.util.SceneManager;
 import com.example.demo.util.SessionManager;
 import javafx.collections.FXCollections;
@@ -14,9 +15,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -89,8 +89,11 @@ public class ExpenseListController {
 
                 deleteBtn.setOnAction(e -> {
                     Expense expense = getTableView().getItems().get(getIndex());
-                    expenseService.deleteExpense(expense.getId());
-                    loadExpenses();
+                    boolean confirmed = AlertUtil.confirm("Delete Expense", "Are you sure you want to delete this expense?");
+                    if (confirmed) {
+                        expenseService.deleteExpense(expense.getId());
+                        loadExpenses();
+                    }
                 });
             }
 
@@ -133,4 +136,66 @@ public class ExpenseListController {
             e.printStackTrace();
         }
     }
+    @FXML private void goToBudget() {
+        SceneManager.switchScene("budget.fxml");
+    }
+    @FXML private void goToReports() {
+        SceneManager.switchScene("report.fxml");
+    }
+    @FXML private void goToCategories() {
+        SceneManager.switchScene("categories.fxml");
+    }
+    @FXML
+    private void handleImport() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("CSV Files", "*.csv"));
+        File file = fileChooser.showOpenDialog(expenseTable.getScene().getWindow());
+        if (file == null) return;
+
+        int userId = SessionManager.getCurrentUser().getId();
+        int imported = 0;
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            String line;
+            boolean dataStarted = false;
+
+            while ((line = reader.readLine()) != null) {
+                line = line.trim();
+                if (line.isEmpty()) continue;
+
+                if (!dataStarted) {
+                    if (line.equalsIgnoreCase("Date,Description,Category,Amount")) {
+                        dataStarted = true;
+                    }
+                    continue;
+                }
+
+                String[] parts = line.split(",", -1);
+                if (parts.length < 4) continue;
+
+                try {
+                    LocalDate date = LocalDate.parse(parts[0].trim());
+                    String description = parts[1].trim();
+                    String categoryName = parts[2].trim();
+                    double amount = Double.parseDouble(parts[3].trim());
+
+                    Category category = categoryRepo.findAll().stream()
+                            .filter(c -> c.getName().equalsIgnoreCase(categoryName))
+                            .findFirst()
+                            .orElse(null);
+                    int categoryId = category != null ? category.getId() : 0;
+
+                    expenseService.addExpense(userId, categoryId, amount, description, date);
+                    imported++;
+                } catch (Exception ex) {
+                    // skip malformed row
+                }
+            }
+            loadExpenses();
+            System.out.println("Imported " + imported + " expenses.");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

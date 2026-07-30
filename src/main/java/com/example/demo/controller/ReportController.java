@@ -97,16 +97,25 @@ public class ReportController {
 
     @FXML
     private void goToDashboard() {
+
         SceneManager.switchScene("dashboard.fxml");
     }
 
     @FXML
     private void goToExpenseList() {
+
         SceneManager.switchScene("expense_list.fxml");
     }
 
     @FXML
     private void goToBudget() {
+
         SceneManager.switchScene("budget.fxml");
     }
+
+    @FXML
+    private void goToCategories() {
+        SceneManager.switchScene("categories.fxml");
+    }
+
 }

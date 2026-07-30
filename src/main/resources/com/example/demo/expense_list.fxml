@@ -12,46 +12,46 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="520.0" prefWidth="920.0" style="-fx-background-color: #F5F6FA;"
-            xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.example.demo.controller.ExpenseListController">
+<BorderPane prefHeight="520.0" prefWidth="920.0" style="-fx-background-color: #F5F6FA;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.controller.ExpenseListController">
 
     <left>
         <VBox prefWidth="260.0" spacing="6.0" style="-fx-background-color: #1C2130;">
-            <padding><Insets top="32.0" left="20.0" right="20.0" /></padding>
+            <padding><Insets left="20.0" right="20.0" top="32.0" /></padding>
             <children>
-                <Label text="💰 ExpenseTracker" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: white;" />
+                <Label style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: white;" text="ExpenseTracker" />
                 <Region prefHeight="28.0" />
-                <Button text="Dashboard" maxWidth="Infinity" onAction="#goToDashboard" style="-fx-background-color: transparent; -fx-text-fill: #C0C2CB; -fx-alignment: CENTER_LEFT; -fx-padding: 12;" />
-                <Button text="Expenses" maxWidth="Infinity" style="-fx-background-color: #3868F2; -fx-text-fill: white; -fx-background-radius: 8; -fx-alignment: CENTER_LEFT; -fx-padding: 12;" />
-                <Button text="Budget" maxWidth="Infinity" style="-fx-background-color: transparent; -fx-text-fill: #C0C2CB; -fx-alignment: CENTER_LEFT; -fx-padding: 12;" />
-                <Button text="Reports" maxWidth="Infinity" style="-fx-background-color: transparent; -fx-text-fill: #C0C2CB; -fx-alignment: CENTER_LEFT; -fx-padding: 12;" />
+                <Button maxWidth="Infinity" onAction="#goToDashboard" style="-fx-background-color: transparent; -fx-text-fill: #C0C2CB; -fx-alignment: CENTER_LEFT; -fx-padding: 12;" text="Dashboard" />
+                <Button maxWidth="Infinity" style="-fx-background-color: #3868F2; -fx-text-fill: white; -fx-background-radius: 8; -fx-alignment: CENTER_LEFT; -fx-padding: 12;" text="Expenses" />
+                <Button maxWidth="Infinity" onAction="#goToBudget" style="-fx-background-color: transparent; -fx-text-fill: #C0C2CB; -fx-alignment: CENTER_LEFT; -fx-padding: 12;" text="Budget" />
+                <Button maxWidth="Infinity" onAction="#goToReports" style="-fx-background-color: transparent; -fx-text-fill: #C0C2CB; -fx-alignment: CENTER_LEFT; -fx-padding: 12;" text="Reports" />
+                <Button maxWidth="Infinity" onAction="#goToCategories" style="-fx-background-color: transparent; -fx-text-fill: #C0C2CB; -fx-alignment: CENTER_LEFT; -fx-padding: 12;" text="Categories" />
             </children>
         </VBox>
     </left>
 
     <center>
         <VBox spacing="20.0">
-            <padding><Insets top="32.0" left="36.0" right="36.0" /></padding>
+            <padding><Insets left="36.0" right="36.0" top="32.0" /></padding>
             <children>
-                <Label text="Expenses" style="-fx-font-size: 22px; -fx-font-weight: bold;" />
+                <Label style="-fx-font-size: 22px; -fx-font-weight: bold;" text="Expenses" />
 
                 <HBox spacing="12.0">
                     <children>
-                        <TextField fx:id="searchField" promptText="Search expenses..." prefWidth="280.0" style="-fx-background-radius: 8; -fx-border-radius: 8; -fx-border-color: #E0E1E8;" />
-                        <ComboBox fx:id="categoryFilter" promptText="Category" prefWidth="170.0" />
+                        <TextField fx:id="searchField" prefHeight="37.0" prefWidth="247.0" promptText="Search expenses..." style="-fx-background-radius: 8; -fx-border-radius: 8; -fx-border-color: #E0E1E8;" />
+                        <ComboBox fx:id="categoryFilter" prefHeight="48.0" prefWidth="154.0" promptText="Category" style="-fx-background-radius: 8;" />
                         <Region HBox.hgrow="ALWAYS" />
-                        <Button text="Export CSV" onAction="#handleExport" style="-fx-background-color: white; -fx-border-color: #E0E1E8; -fx-background-radius: 8; -fx-padding: 10;" />
+                        <Button onAction="#handleImport" style="-fx-background-color: white; -fx-background-radius: 12; -fx-padding: 10;" text="Import CSV" />
+                        <Button onAction="#handleExport" style="-fx-background-color: white; -fx-background-radius: 12; -fx-padding: 10;" text="Export CSV" />
                     </children>
                 </HBox>
 
-                <TableView fx:id="expenseTable" prefHeight="560.0">
+                <TableView fx:id="expenseTable" prefHeight="388.0" prefWidth="576.0">
                     <columns>
-                        <TableColumn fx:id="dateColumn" text="Date" prefWidth="140.0" />
-                        <TableColumn fx:id="descriptionColumn" text="Description" prefWidth="280.0" />
-                        <TableColumn fx:id="categoryColumn" text="Category" prefWidth="160.0" />
-                        <TableColumn fx:id="amountColumn" text="Amount" prefWidth="130.0" />
-                        <TableColumn fx:id="actionsColumn" text="Actions" prefWidth="160.0" />
+                        <TableColumn fx:id="dateColumn" prefWidth="140.0" text="Date" />
+                        <TableColumn fx:id="descriptionColumn" prefWidth="280.0" text="Description" />
+                        <TableColumn fx:id="categoryColumn" prefWidth="160.0" text="Category" />
+                        <TableColumn fx:id="amountColumn" prefWidth="130.0" text="Amount" />
+                        <TableColumn fx:id="actionsColumn" prefWidth="160.0" text="Actions" />
                     </columns>
                 </TableView>
             </children>
