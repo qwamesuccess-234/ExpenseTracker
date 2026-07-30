@@ -84,6 +84,18 @@ public class UserRepo {
         return members;
     }
 
+    public boolean updateProfilePicture(int userId, String path) {
+        String query = "UPDATE users SET profile_picture_path = ? WHERE id = ?";
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setString(1, path);
+            ps.setInt(2, userId);
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     public boolean addTeamMember(int organizationOwnerId, String memberEmail) {
         String query = "UPDATE users SET organization_id = ? WHERE email = ? AND organization_id IS NULL";
         try (PreparedStatement ps = connection.prepareStatement(query)) {

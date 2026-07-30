@@ -42,6 +42,7 @@
                         <Region HBox.hgrow="ALWAYS" />
                         <Button onAction="#handleImport" style="-fx-background-color: white; -fx-background-radius: 12; -fx-padding: 10;" text="Import CSV" />
                         <Button onAction="#handleExport" style="-fx-background-color: white; -fx-background-radius: 12; -fx-padding: 10;" text="Export CSV" />
+                        <ComboBox fx:id="exportPeriodCombo" promptText="Period" prefWidth="130.0"/>
                     </children>
                 </HBox>
 

@@ -47,6 +47,7 @@
                         <Button text="Apply" onAction="#handleApplyFilter" style="-fx-background-color: #3868F2; -fx-text-fill: white; -fx-background-radius: 8; -fx-padding: 8 16;" />
                         <Region HBox.hgrow="ALWAYS" />
                         <Button text="Export CSV" onAction="#handleExportCsv" style="-fx-background-color: white; -fx-border-color: #E0E1E8; -fx-background-radius: 8; -fx-padding: 8 16;" />
+                        <Button text="Export PDF" onAction="#handleExportPdf" style="-fx-background-color: #3868F2; -fx-text-fill: white; -fx-background-radius: 8; -fx-padding: 8 16;" />
                     </children>
                 </HBox>
 

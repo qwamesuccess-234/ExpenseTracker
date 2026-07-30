@@ -3,9 +3,11 @@ package com.example.demo.controller;
 import com.example.demo.model.Expense;
 import com.example.demo.model.User;
 import com.example.demo.repo.UserRepo;
+import com.example.demo.service.BudgetService;
 import com.example.demo.service.ExpenseService;
 import com.example.demo.util.SceneManager;
 import com.example.demo.util.SessionManager;
+import com.example.demo.util.ToastUtil;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -13,8 +15,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 
+import java.io.File;
 import java.util.List;
 
 public class DashboardController {
@@ -35,8 +40,18 @@ public class DashboardController {
 
     private final ExpenseService expenseService = new ExpenseService();
 
+    @FXML private ImageView profileImageView;
+    @FXML private Label sidebarNameLabel;
+    @FXML private Label sidebarEmailLabel;
+
     @FXML
     public void initialize() {
+        User user = SessionManager.getCurrentUser();
+        welcomeLabel.setText("Welcome back, " + user.getName());
+
+        sidebarNameLabel.setText(user.getName());
+        sidebarEmailLabel.setText(user.getEmail());
+        loadProfileImage(user.getProfilePicturePath());
         welcomeLabel.setText("Welcome back, " + SessionManager.getCurrentUser().getName());
 
         dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
@@ -46,6 +61,20 @@ public class DashboardController {
 
         applyRoleBasedVisibility();
         loadDashboardData();
+    }
+    private void loadProfileImage(String path) {
+        try {
+            if (path != null && !path.isEmpty() && new File(path).exists()) {
+                profileImageView.setImage(new Image(new File(path).toURI().toString()));
+            } else {
+                // fallback placeholder avatar bundled in resources
+                profileImageView.setImage(new Image(
+                        getClass().getResourceAsStream("/com/example/demo/images/default_avatar.png")
+                ));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void applyRoleBasedVisibility() {
@@ -71,6 +100,11 @@ public class DashboardController {
 
     private void loadDashboardData() {
         int userId = SessionManager.getCurrentUser().getId();
+
+        String warning = new BudgetService().checkBudgetStatus(userId);
+        if (warning != null) {
+            ToastUtil.showError(rootPane, warning);
+        }
 
         List<Expense> expenses = expenseService.getExpensesForUser(userId);
         ObservableList<Expense> data = FXCollections.observableArrayList(expenses);

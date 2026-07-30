@@ -4,7 +4,7 @@ import com.example.demo.model.Expense;
 import com.example.demo.model.User;
 
 public class SessionManager {
-    private static User currentUser;
+    public static User currentUser;
     private static Expense selectedExpense;
 
     public static void setCurrentUser(User user) { currentUser = user; }

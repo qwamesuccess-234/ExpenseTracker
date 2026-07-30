@@ -1,15 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Region?>
-<?import javafx.scene.layout.VBox?>
-
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.Circle?>
 <BorderPane prefHeight="520.0" prefWidth="920.0" style="-fx-background-color: #F5F6FA;"
             xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.example.demo.controller.DashboardController">
@@ -27,6 +22,25 @@
                 <Button text="Categories" maxWidth="Infinity" onAction="#goToCategories" style="-fx-background-color: transparent; -fx-text-fill: #C0C2CB; -fx-alignment: CENTER_LEFT; -fx-padding: 12;" />
                 <Button text="Settings" maxWidth="Infinity" onAction="#goToSettings" style="-fx-background-color: transparent; -fx-text-fill: #C0C2CB; -fx-alignment: CENTER_LEFT; -fx-padding: 12;" />
                 <Region VBox.vgrow="ALWAYS" />
+
+                <HBox spacing="10.0" prefHeight="56.0" alignment="CENTER_LEFT"
+                      style="-fx-background-color: #232838; -fx-background-radius: 8; -fx-padding: 8;"
+                      onMouseClicked="#goToSettings">
+                    <children>
+                        <ImageView fx:id="profileImageView" fitWidth="36.0" fitHeight="36.0" preserveRatio="true">
+                            <clip>
+                                <Circle radius="18" centerX="18" centerY="18" />
+                            </clip>
+                        </ImageView>
+                        <VBox spacing="1.0">
+                            <children>
+                                <Label fx:id="sidebarNameLabel" style="-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: white;" />
+                                <Label fx:id="sidebarEmailLabel" style="-fx-font-size: 10px; -fx-text-fill: #8C919E;" />
+                            </children>
+                        </VBox>
+                    </children>
+                </HBox>
+
                 <Button text="Logout" maxWidth="Infinity" onAction="#logout" style="-fx-background-color: transparent; -fx-text-fill: #E64D4D; -fx-alignment: CENTER_LEFT; -fx-padding: 12;" />
             </children>
         </VBox>

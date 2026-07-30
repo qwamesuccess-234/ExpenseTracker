@@ -87,6 +87,10 @@ public class User {
         return companyName;
     }
 
+    private String profilePicturePath;
+    public String getProfilePicturePath() { return profilePicturePath; }
+    public void setProfilePicturePath(String profilePicturePath) { this.profilePicturePath = profilePicturePath; }
+
     public void setCompanyName(String companyName) {
         this.companyName = companyName;
     }

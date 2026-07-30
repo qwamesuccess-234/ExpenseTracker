@@ -2,8 +2,10 @@ package com.example.demo.controller;
 
 import com.example.demo.model.Expense;
 import com.example.demo.service.ReportService;
+import com.example.demo.util.AlertUtil;
 import com.example.demo.util.SceneManager;
 import com.example.demo.util.SessionManager;
+import com.example.demo.util.ToastUtil;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.chart.BarChart;
@@ -11,6 +13,10 @@ import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.DatePicker;
 import javafx.stage.FileChooser;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.font.PDType1Font;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -93,6 +99,57 @@ public class ReportController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    @FXML
+    private void handleExportPdf() {
+        int userId = SessionManager.getCurrentUser().getId();
+        LocalDate from = fromDatePicker.getValue();
+        LocalDate to = toDatePicker.getValue();
+        List<Expense> expenses = reportService.getExpensesInRange(userId, from, to);
+
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setInitialFileName("expense_report.pdf");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDF Files", "*.pdf"));
+        File file = fileChooser.showSaveDialog(categoryPieChart.getScene().getWindow());
+        if (file == null) return;
+
+        try (PDDocument doc = new PDDocument()) {
+            PDPage page = new PDPage();
+            doc.addPage(page);
+
+            try (PDPageContentStream content = new PDPageContentStream(doc, page)) {
+                content.setFont(PDType1Font.HELVETICA_BOLD, 18);
+                content.beginText();
+                content.newLineAtOffset(50, 750);
+                content.showText("ExpenseTracker Report");
+                content.endText();
+
+                content.setFont(PDType1Font.HELVETICA, 11);
+                float y = 710;
+                content.beginText();
+                content.newLineAtOffset(50, y);
+                content.showText("Date         Description                 Category         Amount");
+                content.endText();
+
+                for (Expense e : expenses) {
+                    y -= 18;
+                    if (y < 50) break; // simple single-page cutoff; paginate later if needed
+                    content.beginText();
+                    content.newLineAtOffset(50, y);
+                    content.showText(String.format("%s   %-25s %-15s $%.2f",
+                            e.getDate(), truncate(e.getDescription(), 24), e.getCategoryName(), e.getAmount()));
+                    content.endText();
+                }
+            }
+            doc.save(file);
+            ToastUtil.showSuccess(rootPane, "PDF exported successfully");
+        } catch (IOException e) {
+            AlertUtil.showError("Export Failed", "Could not create PDF file.");
+        }
+    }
+
+    private String truncate(String text, int max) {
+        return text.length() > max ? text.substring(0, max - 1) + "…" : text;
     }
 
     @FXML

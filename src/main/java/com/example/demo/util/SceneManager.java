@@ -35,5 +35,12 @@ public class SceneManager {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        Scene scene = new Scene(root);
+        if (PreferencesUtil.isDarkModeEnabled()) {
+            scene.getStylesheets().add(SceneManager.class.getResource("/com/example/demo/dark-theme.css").toExternalForm());
+        }
+        primaryStage.setScene(scene);
+        primaryStage.show();
     }
 }
