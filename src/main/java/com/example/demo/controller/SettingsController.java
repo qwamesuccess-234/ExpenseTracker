@@ -45,10 +45,10 @@ public class SettingsController {
         if (file == null) return;
 
         try {
-            Path profileDir = Paths.get(System.getProperty("user.home"), ".expensetracker", "profile_pictures");
+            java.nio.file.Path profileDir = Paths.get(System.getProperty("user.home"), ".expensetracker", "profile_pictures");
             Files.createDirectories(profileDir);
             String fileName = "user_" + SessionManager.getCurrentUser().getId() + "_" + file.getName();
-            Path destination = profileDir.resolve(fileName);
+            java.nio.file.Path destination = profileDir.resolve(fileName);
             Files.copy(file.toPath(), destination, StandardCopyOption.REPLACE_EXISTING);
 
             String path = destination.toString();
@@ -70,7 +70,7 @@ public class SettingsController {
         if (file == null) return;
 
         boolean success = backupService.backupDatabase(
-                "C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin", "root", "123success", "expense_db", file
+                "C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin", "root", "Edmund@123", "expense_db", file
         );
         if (success) ToastUtil.showSuccess(rootPane, "Backup created successfully");
         else AlertUtil.showError("Backup Failed", "Check your MySQL bin path is correct.");
@@ -83,11 +83,11 @@ public class SettingsController {
 
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("SQL Files", "*.sql"));
-        PluginProtos.CodeGeneratorResponse.File file = fileChooser.showOpenDialog(nameField.getScene().getWindow());
+        File file = fileChooser.showOpenDialog(nameField.getScene().getWindow());
         if (file == null) return;
 
         boolean success = backupService.restoreDatabase(
-                "C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin", "root", "123success", "expense_db", file
+                "C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin", "root", "Edmund@123", "expense_db", file
         );
         if (success) ToastUtil.showSuccess(rootPane, "Database restored");
         else AlertUtil.showError("Restore Failed", "Check the file and MySQL bin path.");

@@ -12,11 +12,13 @@ import javafx.scene.chart.BarChart;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.DatePicker;
+import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
+import org.apache.pdfbox.pdmodel.font.Standard14Fonts;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -31,6 +33,8 @@ public class ReportController {
     @FXML private BarChart<String, Number> trendBarChart;
     @FXML private DatePicker fromDatePicker;
     @FXML private DatePicker toDatePicker;
+
+    private StackPane rootPane;
 
     private final ReportService reportService = new ReportService();
 
@@ -118,13 +122,13 @@ public class ReportController {
             doc.addPage(page);
 
             try (PDPageContentStream content = new PDPageContentStream(doc, page)) {
-                content.setFont(PDType1Font.HELVETICA_BOLD, 18);
+                content.setFont(new PDType1Font(Standard14Fonts.FontName.HELVETICA_BOLD), 18);
                 content.beginText();
                 content.newLineAtOffset(50, 750);
                 content.showText("ExpenseTracker Report");
                 content.endText();
 
-                content.setFont(PDType1Font.HELVETICA, 11);
+                content.setFont(new PDType1Font(Standard14Fonts.FontName.HELVETICA), 11);
                 float y = 710;
                 content.beginText();
                 content.newLineAtOffset(50, y);

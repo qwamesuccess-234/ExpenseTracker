@@ -17,6 +17,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 import java.io.File;
@@ -37,6 +38,8 @@ public class DashboardController {
     @FXML private TableColumn<Expense, String> descriptionColumn;
     @FXML private TableColumn<Expense, String> categoryColumn;
     @FXML private TableColumn<Expense, Double> amountColumn;
+
+    private StackPane rootPane;
 
     private final ExpenseService expenseService = new ExpenseService();
 
@@ -112,6 +115,8 @@ public class DashboardController {
 
         double total = expenseService.getTotalSpentThisMonth(userId);
         totalSpentLabel.setText(String.format("$%.2f", total));
+        double remaining = budget.getLimitAmount() - spent;
+        remainingLabel.setText(String.format("$%.2f remaining", remaining));
     }
 
     @FXML private void goToAddExpense() { SceneManager.switchScene("add_expense.fxml"); }

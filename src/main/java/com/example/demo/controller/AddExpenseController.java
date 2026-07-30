@@ -32,6 +32,7 @@ public class AddExpenseController {
     @FXML private ComboBox<Category> categoryCombo;
     @FXML private DatePicker datePicker;
     @FXML private Label errorLabel;
+    @FXML private Label receiptLabel;
     @FXML private StackPane rootPane;
 
     private final ExpenseService expenseService = new ExpenseService();
@@ -47,10 +48,10 @@ public class AddExpenseController {
         if (file == null) return;
 
         try {
-            Path receiptsDir = Paths.get(System.getProperty("user.home"), ".expensetracker", "receipts");
+            java.nio.file.Path receiptsDir = Paths.get(System.getProperty("user.home"), ".expensetracker", "receipts");
             Files.createDirectories(receiptsDir);
             String fileName = System.currentTimeMillis() + "_" + file.getName();
-            Path destination;
+            java.nio.file.Path destination;
             destination = receiptsDir.resolve(fileName);
             Files.copy(file.toPath(), destination, StandardCopyOption.REPLACE_EXISTING);
 
