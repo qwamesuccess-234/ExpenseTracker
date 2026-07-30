@@ -1,7 +1,11 @@
 package com.example.demo.repo;
 
 import com.example.demo.model.User;
+import com.example.demo.util.PasswordUtil;
+
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserRepo {
 
@@ -25,13 +29,10 @@ public class UserRepo {
         return false;
     }
 
-    public User findByEmailAndPassword(String email, String password) {
-        String query = "SELECT id, name, email, phone, user_type, status FROM users WHERE email = ? AND password = ?";
-        try (
-                PreparedStatement ps = connection.prepareStatement(query))
-        {
+    public User findByEmail(String email) {
+        String query = "SELECT id, name, email, phone, password, user_type, company_name, status FROM users WHERE email = ?";
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setString(1, email);
-            ps.setString(2, password);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 User user = new User();
@@ -39,7 +40,9 @@ public class UserRepo {
                 user.setName(rs.getString("name"));
                 user.setEmail(rs.getString("email"));
                 user.setPhone(rs.getString("phone"));
+                user.setPassword(rs.getString("password")); // this is the hash
                 user.setUserType(rs.getString("user_type"));
+                user.setCompanyName(rs.getString("company_name"));
                 user.setStatus(rs.getBoolean("status"));
                 return user;
             }
@@ -49,17 +52,72 @@ public class UserRepo {
         return null;
     }
 
+    public boolean updatePassword(int userId, String newHashedPassword) {
+        String query = "UPDATE users SET password = ? WHERE id = ?";
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setString(1, newHashedPassword);
+            ps.setInt(2, userId);
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public List<User> findTeamMembers(int organizationOwnerId) {
+        List<User> members = new ArrayList<>();
+        String query = "SELECT id, name, email, user_type FROM users WHERE organization_id = ?";
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setInt(1, organizationOwnerId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                User u = new User();
+                u.setId(rs.getInt("id"));
+                u.setName(rs.getString("name"));
+                u.setEmail(rs.getString("email"));
+                u.setUserType(rs.getString("user_type"));
+                members.add(u);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return members;
+    }
+
+    public boolean updateProfilePicture(int userId, String path) {
+        String query = "UPDATE users SET profile_picture_path = ? WHERE id = ?";
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setString(1, path);
+            ps.setInt(2, userId);
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean addTeamMember(int organizationOwnerId, String memberEmail) {
+        String query = "UPDATE users SET organization_id = ? WHERE email = ? AND organization_id IS NULL";
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setInt(1, organizationOwnerId);
+            ps.setString(2, memberEmail);
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     public boolean save(User user) {
-        String query = "INSERT INTO users (name, email, phone, password, user_type, status) VALUES (?, ?, ?, ?, ?, ?)";
-        try (
-                PreparedStatement ps = connection.prepareStatement(query))
-        {
+        String query = "INSERT INTO users (name, email, phone, password, user_type, company_name, status) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setString(1, user.getName());
             ps.setString(2, user.getEmail());
             ps.setString(3, user.getPhone());
-            ps.setString(4, user.getPassword());
+            ps.setString(4, PasswordUtil.hash(user.getPassword())); // hash here, not in the controller
             ps.setString(5, user.getUserType());
-            ps.setBoolean(6, true); // active by default on registration
+            ps.setString(6, user.getCompanyName());
+            ps.setBoolean(7, true);
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();

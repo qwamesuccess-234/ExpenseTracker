@@ -3,7 +3,7 @@ package com.example.demo.model;
 public class User {
 
     private int id;
-    private String name,email,phone,password,userType;
+    private String name, email, phone, password, userType;
     boolean status;
 
     public User() {
@@ -72,7 +72,26 @@ public class User {
         return status;
     }
 
+    private Integer organizationId;
+
+    public Integer getOrganizationId() { return organizationId; }
+    public void setOrganizationId(Integer organizationId) { this.organizationId = organizationId; }
+
     public void setStatus(boolean status) {
         this.status = status;
+    }
+
+    private String companyName;
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    private String profilePicturePath;
+    public String getProfilePicturePath() { return profilePicturePath; }
+    public void setProfilePicturePath(String profilePicturePath) { this.profilePicturePath = profilePicturePath; }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
     }
 }

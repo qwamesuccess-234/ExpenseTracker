@@ -11,6 +11,10 @@ public class Expense {
     private String description;
     private LocalDate date;
 
+    private String receiptPath;
+    public String getReceiptPath() { return receiptPath; }
+    public void setReceiptPath(String receiptPath) { this.receiptPath = receiptPath; }
+
     public Expense() {}
 
     public int getId() { return id; }

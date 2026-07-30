@@ -10,83 +10,77 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane prefHeight="520.0" prefWidth="920.0" style="-fx-background-color: linear-gradient(to bottom right, #1C2130, #26314F);" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.controller.RegisterController">
-    <VBox  maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="558.0" prefWidth="398.0" spacing="7.0" style="-fx-background-color: white; -fx-background-radius: 18; -fx-padding: 30;" StackPane.alignment="CENTER">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="800" prefWidth="1200"
+           style="-fx-background-color: linear-gradient(to bottom right, #1C2130, #26314F);"
+           xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="com.example.demo.controller.RegisterController">
+
+    <VBox maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="620.0" prefWidth="398.0"
+          spacing="7.0" style="-fx-background-color: white; -fx-background-radius: 18; -fx-padding: 30;"
+          StackPane.alignment="CENTER">
         <children>
-            <Label fx:id="error_message_txt" prefHeight="26.0" prefWidth="333.0" />
+            <Label fx:id="error_message_txt" prefHeight="26.0" prefWidth="333.0" style="-fx-text-fill: #E64D4D;" />
             <Label style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #1C2130;" text="Create Account" />
             <Label prefHeight="17.0" prefWidth="225.0" style="-fx-font-size: 13px; -fx-text-fill: #8C919E;" text="Start tracking your expenses today" />
+
             <Label prefHeight="32.0" prefWidth="64.0" text="Fullname">
-                <padding>
-                    <Insets top="15.0" />
-                </padding>
+                <padding><Insets top="15.0" /></padding>
             </Label>
             <TextField fx:id="fullnameField" prefHeight="34.0" prefWidth="338.0" promptText="Enter your fullname" style="-fx-background-radius: 5;" />
+
             <Label alignment="BASELINE_LEFT" prefHeight="32.0" prefWidth="66.0" text="Email" />
             <TextField fx:id="emailField" prefHeight="34.0" prefWidth="338.0" promptText="Enter email" style="-fx-background-radius: 5;">
-                <VBox.margin>
-                    <Insets top="-5.0" />
-                </VBox.margin>
+                <VBox.margin><Insets top="-5.0" /></VBox.margin>
             </TextField>
 
             <Label alignment="BASELINE_LEFT" prefHeight="32.0" prefWidth="66.0" text="Phone" />
             <TextField fx:id="phoneField" prefHeight="34.0" prefWidth="338.0" promptText="Enter phone number" style="-fx-background-radius: 5;">
-                <VBox.margin>
-                    <Insets top="-5.0" />
-                </VBox.margin>
+                <VBox.margin><Insets top="-5.0" /></VBox.margin>
             </TextField>
 
-         <Label alignment="BASELINE_LEFT" prefHeight="32.0" prefWidth="66.0" text="Password" />
-         <TextField fx:id="passwordField" prefHeight="34.0" prefWidth="338.0" promptText="Enter password" style="-fx-background-radius: 5;">
-            <VBox.margin>
-               <Insets top="-5.0" />
-            </VBox.margin>
-         </TextField>
-         <Label alignment="BASELINE_LEFT" prefHeight="32.0" prefWidth="116.0" text="Comfirm Password" />
-         <TextField fx:id="comfirm_PasswordField" prefHeight="34.0" prefWidth="338.0" promptText="Comfirm password" style="-fx-background-radius: 5;">
-            <VBox.margin>
-               <Insets top="-5.0" />
-            </VBox.margin>
-         </TextField>
-         <Label prefHeight="17.0" prefWidth="88.0" text="Account Type">
-            <VBox.margin>
-               <Insets top="5.0" />
-            </VBox.margin>
-         </Label>
-         <ButtonBar maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="40.0" prefWidth="380.0">
-           <buttons>
-             <Button fx:id="individuaButton" mnemonicParsing="false" prefHeight="31.0" prefWidth="115.0" style="-fx-background-color: blue; -fx-background-radius: 8;" text="Iindivdual" onAction="#individualSelected" textFill="WHITE">
-                  <font>
-                     <Font name="System Bold" size="12.0" />
-                  </font>
-               </Button>
-               <Button fx:id="corporationButton" mnemonicParsing="false" prefHeight="32.0" style="-fx-background-color: blue; -fx-background-radius: 8;" text="Corporation" onAction="#corporationSelected" textFill="WHITE">
-                  <font>
-                     <Font name="System Bold" size="12.0" />
-                  </font>
-               </Button>
-               <Button fx:id="enterpriseButton" mnemonicParsing="false" prefHeight="32.0" prefWidth="141.0" style="-fx-background-color: blue; -fx-background-radius: 8;" text="Enterprise" onAction="#enterpriseSelected" textFill="WHITE">
-                  <font>
-                     <Font name="System Bold" size="12.0" />
-                  </font>
-               </Button>
-           </buttons>
-            <VBox.margin>
-               <Insets left="-20.0" />
-            </VBox.margin>
-         </ButtonBar>
-         <Button fx:id="registerLink" mnemonicParsing="false" onAction="#handleregister" prefHeight="33.0" prefWidth="338.0" style="-fx-background-color: blue; -fx-background-radius: 8;" text="Register" textFill="WHITE">
-            <VBox.margin>
-               <Insets top="9.0" />
-            </VBox.margin>
-            <font>
-               <Font name="System Bold" size="15.0" />
-            </font>
-         </Button>
+            <Label fx:id="companyNameLabel" alignment="BASELINE_LEFT" prefHeight="32.0" prefWidth="150.0" text="Company Name" visible="false" managed="false" />
+            <TextField fx:id="companyNameField" prefHeight="34.0" prefWidth="338.0" promptText="Enter company name" style="-fx-background-radius: 5;" visible="false" managed="false">
+                <VBox.margin><Insets top="-5.0" /></VBox.margin>
+            </TextField>
+
+            <Label alignment="BASELINE_LEFT" prefHeight="32.0" prefWidth="66.0" text="Password" />
+            <TextField fx:id="passwordField" prefHeight="34.0" prefWidth="338.0" promptText="Enter password" style="-fx-background-radius: 5;">
+                <VBox.margin><Insets top="-5.0" /></VBox.margin>
+            </TextField>
+
+            <Label alignment="BASELINE_LEFT" prefHeight="32.0" prefWidth="116.0" text="Confirm Password" />
+            <TextField fx:id="comfirm_PasswordField" prefHeight="34.0" prefWidth="338.0" promptText="Confirm password" style="-fx-background-radius: 5;">
+                <VBox.margin><Insets top="-5.0" /></VBox.margin>
+            </TextField>
+
+            <Label prefHeight="17.0" prefWidth="88.0" text="Account Type">
+                <VBox.margin><Insets top="5.0" /></VBox.margin>
+            </Label>
+            <ButtonBar maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="40.0" prefWidth="380.0">
+                <buttons>
+                    <Button fx:id="individuaButton" mnemonicParsing="false" onAction="#individualSelected"
+                            prefHeight="31.0" prefWidth="115.0" style="-fx-background-color: #21B373; -fx-background-radius: 8;" text="Individual" textFill="WHITE">
+                        <font><Font name="System Bold" size="12.0" /></font>
+                    </Button>
+                    <Button fx:id="corporationButton" mnemonicParsing="false" onAction="#corporationSelected"
+                            prefHeight="32.0" style="-fx-background-color: blue; -fx-background-radius: 8;" text="Corporation" textFill="WHITE">
+                        <font><Font name="System Bold" size="12.0" /></font>
+                    </Button>
+                    <Button fx:id="enterpriseButton" mnemonicParsing="false" onAction="#enterpriseSelected"
+                            prefHeight="32.0" prefWidth="141.0" style="-fx-background-color: blue; -fx-background-radius: 8;" text="Enterprise" textFill="WHITE">
+                        <font><Font name="System Bold" size="12.0" /></font>
+                    </Button>
+                </buttons>
+                <VBox.margin><Insets left="-20.0" /></VBox.margin>
+            </ButtonBar>
+
+            <Button fx:id="registerLink" mnemonicParsing="false" onAction="#handleregister" prefHeight="33.0" prefWidth="338.0"
+                    style="-fx-background-color: blue; -fx-background-radius: 8;" text="Register" textFill="WHITE">
+                <VBox.margin><Insets top="9.0" /></VBox.margin>
+                <font><Font name="System Bold" size="15.0" /></font>
+            </Button>
+
             <Hyperlink fx:id="loginLink" onAction="#goToLogin" text="Already have an account? Login" />
         </children>
-      <StackPane.margin>
-         <Insets />
-      </StackPane.margin>
     </VBox>
 </StackPane>

@@ -2,8 +2,10 @@ package com.example.demo.controller;
 
 import com.example.demo.model.Category;
 import com.example.demo.model.Expense;
+import com.example.demo.model.User;
 import com.example.demo.repo.CategoryRepo;
 import com.example.demo.service.ExpenseService;
+import com.example.demo.util.AlertUtil;
 import com.example.demo.util.SceneManager;
 import com.example.demo.util.SessionManager;
 import javafx.collections.FXCollections;
@@ -13,10 +15,10 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
+import javafx.scene.control.ComboBox;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,13 +32,17 @@ public class ExpenseListController {
     @FXML private TableColumn<Expense, String> categoryColumn;
     @FXML private TableColumn<Expense, Double> amountColumn;
     @FXML private TableColumn<Expense, Void> actionsColumn;
+    @FXML private ComboBox<String> exportPeriodCombo;
 
     private final ExpenseService expenseService = new ExpenseService();
     private final CategoryRepo categoryRepo = new CategoryRepo();
     private ObservableList<Expense> allExpenses;
 
+
     @FXML
     public void initialize() {
+        exportPeriodCombo.setItems(FXCollections.observableArrayList("Daily", "Weekly", "Monthly", "All Time"));
+        exportPeriodCombo.setValue("Daily");
         dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
         descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
         categoryColumn.setCellValueFactory(new PropertyValueFactory<>("categoryName"));
@@ -52,6 +58,18 @@ public class ExpenseListController {
         categoryFilter.valueProperty().addListener((obs, oldVal, newVal) -> applyFilters());
     }
 
+    private List<Expense> getFilteredExport(){
+        LocalDate today = LocalDate.now();
+        String period = exportPeriodCombo.getValue();
+        return expenseTable.getItems().stream()
+                .filter(e -> switch (period){
+                    case "Daily" -> e.getDate().equals(today);
+                    case "Weekly" -> !e.getDate().isBefore(today.minusDays(7));
+                    case "Monthly" -> e.getDate().getMonth() == today.getMonth() && e.getDate().getYear() == today.getYear();
+                    default -> true;
+                })
+                .collect(Collectors.toList());
+    }
     private void loadExpenses() {
         int userId = SessionManager.getCurrentUser().getId();
         List<Expense> expenses = expenseService.getExpensesForUser(userId);
@@ -89,8 +107,11 @@ public class ExpenseListController {
 
                 deleteBtn.setOnAction(e -> {
                     Expense expense = getTableView().getItems().get(getIndex());
-                    expenseService.deleteExpense(expense.getId());
-                    loadExpenses();
+                    boolean confirmed = AlertUtil.confirm("Delete Expense", "Are you sure you want to delete this expense?");
+                    if (confirmed) {
+                        expenseService.deleteExpense(expense.getId());
+                        loadExpenses();
+                    }
                 });
             }
 
@@ -109,10 +130,18 @@ public class ExpenseListController {
 
     @FXML
     private void handleExport() {
-        List<Expense> expenses = expenseTable.getItems();
+        LocalDate today = LocalDate.now();
+        List<Expense> todaysExpenses = expenseTable.getItems().stream()
+                .filter(e ->e.getDate().equals(today))
+                .collect(Collectors.toList());
+
+        if (todaysExpenses.isEmpty()){
+            System.out.println("No expenses recorded today.");
+            return;
+        }
 
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setInitialFileName("expenses.csv");
+        fileChooser.setInitialFileName("expenses_" + today + ".csv");
         fileChooser.getExtensionFilters().add(
                 new FileChooser.ExtensionFilter("CSV Files", "*.csv")
         );
@@ -120,9 +149,15 @@ public class ExpenseListController {
 
         if (file == null) return;
 
+       User currentUser = SessionManager.getCurrentUser();
+
         try (FileWriter writer = new FileWriter(file)) {
+
+            writer.write("ExpenseTracker\n");
+            writer.write("EXPENSE FOR THE " + today + " - " + currentUser.getUserType().toUpperCase() + "\n");
+            writer.write("Exported by: " + currentUser.getName() + "\n\n");
             writer.write("Date,Description,Category,Amount\n");
-            for (Expense e : expenses) {
+            for (Expense e : todaysExpenses) {
                 writer.write(String.format("%s,%s,%s,%.2f%n",
                         e.getDate(),
                         e.getDescription().replace(",", ";"),
@@ -133,4 +168,66 @@ public class ExpenseListController {
             e.printStackTrace();
         }
     }
+    @FXML private void goToBudget() {
+        SceneManager.switchScene("budget.fxml");
+    }
+    @FXML private void goToReports() {
+        SceneManager.switchScene("report.fxml");
+    }
+    @FXML private void goToCategories() {
+        SceneManager.switchScene("categories.fxml");
+    }
+    @FXML
+    private void handleImport() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("CSV Files", "*.csv"));
+        File file = fileChooser.showOpenDialog(expenseTable.getScene().getWindow());
+        if (file == null) return;
+
+        int userId = SessionManager.getCurrentUser().getId();
+        int imported = 0;
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            String line;
+            boolean dataStarted = false;
+
+            while ((line = reader.readLine()) != null) {
+                line = line.trim();
+                if (line.isEmpty()) continue;
+
+                if (!dataStarted) {
+                    if (line.equalsIgnoreCase("Date,Description,Category,Amount")) {
+                        dataStarted = true;
+                    }
+                    continue;
+                }
+
+                String[] parts = line.split(",", -1);
+                if (parts.length < 4) continue;
+
+                try {
+                    LocalDate date = LocalDate.parse(parts[0].trim());
+                    String description = parts[1].trim();
+                    String categoryName = parts[2].trim();
+                    double amount = Double.parseDouble(parts[3].trim());
+
+                    Category category = categoryRepo.findAll().stream()
+                            .filter(c -> c.getName().equalsIgnoreCase(categoryName))
+                            .findFirst()
+                            .orElse(null);
+                    int categoryId = category != null ? category.getId() : 0;
+
+                    expenseService.addExpense(userId, categoryId, amount, description, date);
+                    imported++;
+                } catch (Exception ex) {
+                    // skip malformed row
+                }
+            }
+            loadExpenses();
+            System.out.println("Imported " + imported + " expenses.");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

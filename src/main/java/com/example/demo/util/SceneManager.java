@@ -30,6 +30,11 @@ public class SceneManager {
             FXMLLoader loader = new FXMLLoader(url);
             Parent root = loader.load();
             Scene scene = new Scene(root);
+
+            if (PreferencesUtil.isDarkModeEnabled()) {
+                scene.getStylesheets().add(SceneManager.class.getResource("/com/example/demo/dark-theme.css").toExternalForm());
+            }
+
             primaryStage.setScene(scene);
             primaryStage.show();
         } catch (IOException e) {

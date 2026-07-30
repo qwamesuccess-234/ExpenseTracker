@@ -1,0 +1,23 @@
+.root {
+    -fx-background-color: #1C2130;
+}
+.label {
+    -fx-text-fill: #E5E7EB;
+}
+.text-field, .password-field, .combo-box, .date-picker {
+    -fx-background-color: #2A3040;
+    -fx-text-fill: white;
+    -fx-prompt-text-fill: #8C919E;
+}
+.table-view {
+    -fx-background-color: #2A3040;
+    -fx-control-inner-background: #2A3040;
+    -fx-table-cell-border-color: #3A4050;
+}
+.table-view .column-header, .table-view .column-header-background {
+    -fx-background-color: #1C2130;
+}
+.table-row-cell {
+    -fx-background-color: #2A3040;
+    -fx-text-fill: white;
+}

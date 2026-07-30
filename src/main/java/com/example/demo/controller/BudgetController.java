@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.model.Budget;
 import com.example.demo.service.BudgetService;
+import com.example.demo.util.SceneManager;
 import com.example.demo.util.SessionManager;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -63,5 +64,17 @@ public class BudgetController {
         } catch (NumberFormatException e) {
             progressLabel.setText("Enter a valid number for budget limit");
         }
+    }
+    @FXML private void goToDashboard() {
+        SceneManager.switchScene("dashboard.fxml");
+    }
+    @FXML private void goToExpenseList() {
+        SceneManager.switchScene("expense_list.fxml");
+    }
+    @FXML private void goToReports() {
+        SceneManager.switchScene("report.fxml");
+    }
+    @FXML private void goToCategories() {
+        SceneManager.switchScene("categories.fxml");
     }
 }
