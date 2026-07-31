@@ -2,26 +2,25 @@ package com.example.demo.util;
 
 import javafx.animation.FadeTransition;
 import javafx.animation.PauseTransition;
-import javafx.geometry.Pos;
 import javafx.scene.control.Label;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
 public class ToastUtil {
 
-    public static void show(StackPane rootPane, String message) {
+    public static void show(Pane rootPane, String message) {
         show(rootPane, message, "#1C2130");
     }
 
-    public static void showSuccess(StackPane rootPane, String message) {
+    public static void showSuccess(Pane rootPane, String message) {
         show(rootPane, message, "#21B373");
     }
 
-    public static void showError(StackPane rootPane, String message) {
+    public static void showError(Pane rootPane, String message) {
         show(rootPane, message, "#E64D4D");
     }
 
-    private static void show(StackPane rootPane, String message, String colorHex) {
+    private static void show(Pane rootPane, String message, String colorHex) {
         Label toastLabel = new Label(message);
         toastLabel.setStyle(
                 "-fx-background-color: " + colorHex + ";" +
@@ -31,10 +30,16 @@ public class ToastUtil {
                         "-fx-font-size: 13px;"
         );
 
-        StackPane.setAlignment(toastLabel, Pos.BOTTOM_CENTER);
-        StackPane.setMargin(toastLabel, new javafx.geometry.Insets(0, 0, 30, 0));
-
         rootPane.getChildren().add(toastLabel);
+
+        // Position near the bottom-center of rootPane once the label's size is known.
+        toastLabel.widthProperty().addListener((obs, oldW, newW) -> {
+            toastLabel.setLayoutX((rootPane.getWidth() - newW.doubleValue()) / 2);
+        });
+        toastLabel.setLayoutY(rootPane.getHeight() - 30 - toastLabel.getHeight());
+        toastLabel.heightProperty().addListener((obs, oldH, newH) -> {
+            toastLabel.setLayoutY(rootPane.getHeight() - 30 - newH.doubleValue());
+        });
 
         FadeTransition fadeIn = new FadeTransition(Duration.millis(200), toastLabel);
         fadeIn.setFromValue(0);

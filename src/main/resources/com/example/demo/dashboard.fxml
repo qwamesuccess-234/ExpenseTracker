@@ -1,35 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.Circle?>
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="800" prefWidth="1200" style="-fx-background-color: #F5F6FA;"
-            xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.example.demo.controller.DashboardController">
+<?import javafx.scene.shape.*?>
+
+<BorderPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="800" prefWidth="1200" style="-fx-background-color: #F5F6FA;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.controller.DashboardController">
 
     <left>
         <VBox prefWidth="260.0" spacing="6.0" style="-fx-background-color: #1C2130;">
-            <padding><Insets top="32.0" left="20.0" right="20.0" /></padding>
+            <padding><Insets left="20.0" right="20.0" top="32.0" /></padding>
             <children>
-                <Label text="💰 ExpenseTracker" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: white;" />
+                <Label style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: white;" text="💰 ExpenseTracker" />
                 <Region prefHeight="28.0" />
-                <Button text="Dashboard" maxWidth="Infinity" style="-fx-background-color: #3868F2; -fx-text-fill: white; -fx-background-radius: 8; -fx-alignment: CENTER_LEFT; -fx-padding: 12;" />
-                <Button text="Expenses" maxWidth="Infinity" onAction="#goToExpenseList" style="-fx-background-color: transparent; -fx-text-fill: #C0C2CB; -fx-alignment: CENTER_LEFT; -fx-padding: 12;" />
-                <Button text="Budget" maxWidth="Infinity" onAction="#goToBudget" style="-fx-background-color: transparent; -fx-text-fill: #C0C2CB; -fx-alignment: CENTER_LEFT; -fx-padding: 12;" />
-                <Button text="Reports" maxWidth="Infinity" onAction="#goToReports" style="-fx-background-color: transparent; -fx-text-fill: #C0C2CB; -fx-alignment: CENTER_LEFT; -fx-padding: 12;" />
-                <Button text="Categories" maxWidth="Infinity" onAction="#goToCategories" style="-fx-background-color: transparent; -fx-text-fill: #C0C2CB; -fx-alignment: CENTER_LEFT; -fx-padding: 12;" />
-                <Button text="Settings" maxWidth="Infinity" onAction="#goToSettings" style="-fx-background-color: transparent; -fx-text-fill: #C0C2CB; -fx-alignment: CENTER_LEFT; -fx-padding: 12;" />
+                <Button maxWidth="Infinity" style="-fx-background-color: #3868F2; -fx-text-fill: white; -fx-background-radius: 8; -fx-alignment: CENTER_LEFT; -fx-padding: 12;" text="Dashboard" />
+                <Button maxWidth="Infinity" onAction="#goToExpenseList" style="-fx-background-color: transparent; -fx-text-fill: #C0C2CB; -fx-alignment: CENTER_LEFT; -fx-padding: 12;" text="Expenses" />
+                <Button maxWidth="Infinity" onAction="#goToBudget" style="-fx-background-color: transparent; -fx-text-fill: #C0C2CB; -fx-alignment: CENTER_LEFT; -fx-padding: 12;" text="Budget" />
+                <Button maxWidth="Infinity" onAction="#goToReports" style="-fx-background-color: transparent; -fx-text-fill: #C0C2CB; -fx-alignment: CENTER_LEFT; -fx-padding: 12;" text="Reports" />
+                <Button maxWidth="Infinity" onAction="#goToCategories" style="-fx-background-color: transparent; -fx-text-fill: #C0C2CB; -fx-alignment: CENTER_LEFT; -fx-padding: 12;" text="Categories" />
+                <Button maxWidth="Infinity" onAction="#goToSettings" style="-fx-background-color: transparent; -fx-text-fill: #C0C2CB; -fx-alignment: CENTER_LEFT; -fx-padding: 12;" text="Settings" />
                 <Region VBox.vgrow="ALWAYS" />
 
-                <HBox spacing="10.0" prefHeight="56.0" alignment="CENTER_LEFT"
-                      style="-fx-background-color: #232838; -fx-background-radius: 8; -fx-padding: 8;"
-                      onMouseClicked="#goToSettings">
+                <HBox alignment="CENTER_LEFT" onMouseClicked="#goToSettings" prefHeight="56.0" spacing="10.0" style="-fx-background-color: #232838; -fx-background-radius: 8; -fx-padding: 8;">
                     <children>
-                        <ImageView fx:id="profileImageView" fitWidth="36.0" fitHeight="36.0" preserveRatio="true">
+                        <ImageView fx:id="profileImageView" fitHeight="36.0" fitWidth="36.0" preserveRatio="true">
                             <clip>
-                                <Circle radius="18" centerX="18" centerY="18" />
+                                <Circle centerX="18" centerY="18" radius="18" />
                             </clip>
                         </ImageView>
                         <VBox spacing="1.0">
@@ -41,46 +38,44 @@
                     </children>
                 </HBox>
 
-                <Button text="Logout" maxWidth="Infinity" onAction="#logout" style="-fx-background-color: transparent; -fx-text-fill: #E64D4D; -fx-alignment: CENTER_LEFT; -fx-padding: 12;" />
+                <Button maxWidth="Infinity" onAction="#logout" style="-fx-background-color: transparent; -fx-text-fill: #E64D4D; -fx-alignment: CENTER_LEFT; -fx-padding: 12;" text="Logout" />
             </children>
         </VBox>
     </left>
 
     <center>
         <VBox spacing="24.0">
-            <padding><Insets top="32.0" left="36.0" right="36.0" bottom="20.0" /></padding>
+            <padding><Insets bottom="20.0" left="36.0" right="36.0" top="32.0" /></padding>
             <children>
                 <Label fx:id="welcomeLabel" style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #1C2130;" />
 
                 <HBox spacing="20.0">
                     <children>
 
-                        <VBox fx:id="corporateStatsBox" spacing="8.0" prefHeight="100.0"
-                              style="-fx-background-color: white; -fx-background-radius: 14; -fx-padding: 18;">
+                        <VBox fx:id="corporateStatsBox" prefHeight="100.0" spacing="8.0" style="-fx-background-color: white; -fx-background-radius: 14; -fx-padding: 18;">
                             <children>
-                                <Label text="Company" style="-fx-font-size: 12px; -fx-text-fill: #8C919E;" />
+                                <Label style="-fx-font-size: 12px; -fx-text-fill: #8C919E;" text="Company" />
                                 <Label fx:id="companyNameLabel" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #1C2130;" />
-                                <Label text="Account Type: Business" style="-fx-font-size: 11px; -fx-text-fill: #3868F2;" />
+                                <Label style="-fx-font-size: 11px; -fx-text-fill: #3868F2;" text="Account Type: Business" />
                             </children>
                         </VBox>
 
-                        <VBox fx:id="enterpriseStatsBox" spacing="8.0" prefHeight="100.0"
-                              style="-fx-background-color: white; -fx-background-radius: 14; -fx-padding: 18;">
+                        <VBox fx:id="enterpriseStatsBox" prefHeight="100.0" spacing="8.0" style="-fx-background-color: white; -fx-background-radius: 14; -fx-padding: 18;">
                             <children>
-                                <Label text="Team Activity" style="-fx-font-size: 12px; -fx-text-fill: #8C919E;" />
+                                <Label style="-fx-font-size: 12px; -fx-text-fill: #8C919E;" text="Team Activity" />
                                 <Label fx:id="teamActivityLabel" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #1C2130;" />
-                                <Label text="Enterprise Account" style="-fx-font-size: 11px; -fx-text-fill: #21B373;" />
+                                <Label style="-fx-font-size: 11px; -fx-text-fill: #21B373;" text="Enterprise Account" />
                             </children>
                         </VBox>
-                        <VBox spacing="8.0" prefWidth="230.0" prefHeight="100.0" style="-fx-background-color: white; -fx-background-radius: 14; -fx-padding: 18;">
+                        <VBox prefHeight="100.0" prefWidth="230.0" spacing="8.0" style="-fx-background-color: white; -fx-background-radius: 14; -fx-padding: 18;">
                             <children>
-                                <Label text="Total Spent (This Month)" style="-fx-font-size: 12px; -fx-text-fill: #8C919E;" />
+                                <Label style="-fx-font-size: 12px; -fx-text-fill: #8C919E;" text="Total Spent (This Month)" />
                                 <Label fx:id="totalSpentLabel" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #E64D4D;" />
                             </children>
                         </VBox>
-                        <VBox spacing="8.0" prefWidth="230.0" prefHeight="100.0" style="-fx-background-color: white; -fx-background-radius: 14; -fx-padding: 18;">
+                        <VBox prefHeight="100.0" prefWidth="230.0" spacing="8.0" style="-fx-background-color: white; -fx-background-radius: 14; -fx-padding: 18;">
                             <children>
-                                <Label text="Budget Remaining" style="-fx-font-size: 12px; -fx-text-fill: #8C919E;" />
+                                <Label style="-fx-font-size: 12px; -fx-text-fill: #8C919E;" text="Budget Remaining" />
                                 <Label fx:id="remainingLabel" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #21B373;" />
                             </children>
                         </VBox>
@@ -91,17 +86,17 @@
                     <children>
                         <HBox alignment="CENTER_LEFT">
                             <children>
-                                <Label text="Recent Transactions" style="-fx-font-size: 14px; -fx-font-weight: bold;" />
+                                <Label style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Recent Transactions" />
                                 <Region HBox.hgrow="ALWAYS" />
-                                <Button text="+ Add Expense" onAction="#goToAddExpense" style="-fx-background-color: #3868F2; -fx-text-fill: white; -fx-background-radius: 8; -fx-font-weight: bold;" />
+                                <Button onAction="#goToAddExpense" style="-fx-background-color: #3868F2; -fx-text-fill: white; -fx-background-radius: 8; -fx-font-weight: bold;" text="+ Add Expense" />
                             </children>
                         </HBox>
                         <TableView fx:id="expenseTable" prefHeight="400.0">
                             <columns>
-                                <TableColumn fx:id="dateColumn" text="Date" prefWidth="150.0" />
-                                <TableColumn fx:id="descriptionColumn" text="Description" prefWidth="300.0" />
-                                <TableColumn fx:id="categoryColumn" text="Category" prefWidth="180.0" />
-                                <TableColumn fx:id="amountColumn" text="Amount" prefWidth="150.0" />
+                                <TableColumn fx:id="dateColumn" prefWidth="150.0" text="Date" />
+                                <TableColumn fx:id="descriptionColumn" prefWidth="300.0" text="Description" />
+                                <TableColumn fx:id="categoryColumn" prefWidth="180.0" text="Category" />
+                                <TableColumn fx:id="amountColumn" prefWidth="205.0" text="Amount" />
                             </columns>
                         </TableView>
                     </children>

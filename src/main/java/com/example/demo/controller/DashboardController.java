@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.model.Budget;
 import com.example.demo.model.Expense;
 import com.example.demo.model.User;
 import com.example.demo.repo.UserRepo;
@@ -17,10 +18,11 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 
 import java.io.File;
+import java.io.InputStream;
 import java.util.List;
 
 public class DashboardController {
@@ -39,13 +41,16 @@ public class DashboardController {
     @FXML private TableColumn<Expense, String> categoryColumn;
     @FXML private TableColumn<Expense, Double> amountColumn;
 
-    private StackPane rootPane;
+    @FXML
+    private BorderPane rootPane;
 
     private final ExpenseService expenseService = new ExpenseService();
+    private final BudgetService budgetService = new BudgetService();
 
     @FXML private ImageView profileImageView;
     @FXML private Label sidebarNameLabel;
     @FXML private Label sidebarEmailLabel;
+    @FXML private Label remainingLabel;
 
     @FXML
     public void initialize() {
@@ -71,9 +76,12 @@ public class DashboardController {
                 profileImageView.setImage(new Image(new File(path).toURI().toString()));
             } else {
                 // fallback placeholder avatar bundled in resources
-                profileImageView.setImage(new Image(
-                        getClass().getResourceAsStream("/com/example/demo/images/default_avatar.png")
-                ));
+                InputStream defaultAvatar = getClass().getResourceAsStream("/com/example/demo/images/default_avatar.png");
+                if (defaultAvatar != null) {
+                    profileImageView.setImage(new Image(defaultAvatar));
+                } else {
+                    System.err.println("default_avatar.png not found on classpath at /com/example/demo/images/");
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -103,8 +111,10 @@ public class DashboardController {
 
     private void loadDashboardData() {
         int userId = SessionManager.getCurrentUser().getId();
+        Budget budget = budgetService.getBudget(userId);
+        double spent = budgetService.getSpentThisMonth(userId);
 
-        String warning = new BudgetService().checkBudgetStatus(userId);
+        String warning = budgetService.checkBudgetStatus(userId);
         if (warning != null) {
             ToastUtil.showError(rootPane, warning);
         }
@@ -115,8 +125,13 @@ public class DashboardController {
 
         double total = expenseService.getTotalSpentThisMonth(userId);
         totalSpentLabel.setText(String.format("$%.2f", total));
-        double remaining = budget.getLimitAmount() - spent;
-        remainingLabel.setText(String.format("$%.2f remaining", remaining));
+
+        if (budget != null) {
+            double remaining = budget.getLimitAmount() - spent;
+            remainingLabel.setText(String.format("$%.2f", remaining));
+        } else {
+            remainingLabel.setText("No budget set");
+        }
     }
 
     @FXML private void goToAddExpense() { SceneManager.switchScene("add_expense.fxml"); }
