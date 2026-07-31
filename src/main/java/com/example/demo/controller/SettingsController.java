@@ -11,6 +11,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Path;
@@ -31,7 +32,8 @@ public class SettingsController {
     @FXML private VBox teamSection;
     @FXML private TextField memberEmailField;
 
-    private StackPane rootPane;
+    @FXML
+    private BorderPane rootPane;
 
     private final BackupService backupService = new BackupService();
 

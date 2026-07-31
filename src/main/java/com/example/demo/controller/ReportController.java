@@ -12,6 +12,7 @@ import javafx.scene.chart.BarChart;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.DatePicker;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -34,7 +35,8 @@ public class ReportController {
     @FXML private DatePicker fromDatePicker;
     @FXML private DatePicker toDatePicker;
 
-    private StackPane rootPane;
+    @FXML
+    private BorderPane rootPane;
 
     private final ReportService reportService = new ReportService();
 
