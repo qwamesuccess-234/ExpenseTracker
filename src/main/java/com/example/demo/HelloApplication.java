@@ -19,7 +19,7 @@ public class HelloApplication extends Application {
                 getClass().getResource("/com/example/demo/splash.fxml")
         );
 
-        Scene scene = new Scene(root, 920, 520);
+        Scene scene = new Scene(root);
         stage.setTitle("ExpenseTracker");
         stage.setScene(scene);
         stage.setResizable(true);

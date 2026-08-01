@@ -72,7 +72,7 @@ public class SettingsController {
         if (file == null) return;
 
         boolean success = backupService.backupDatabase(
-                "C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin", "root", "Edmund@123", "expense_db", file
+                "C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin", "root", "Qwame123success", "expense_db", file
         );
         if (success) ToastUtil.showSuccess(rootPane, "Backup created successfully");
         else AlertUtil.showError("Backup Failed", "Check your MySQL bin path is correct.");
@@ -89,7 +89,7 @@ public class SettingsController {
         if (file == null) return;
 
         boolean success = backupService.restoreDatabase(
-                "C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin", "root", "Edmund@123", "expense_db", file
+                "C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin", "root", "Qwame123success3", "expense_db", file
         );
         if (success) ToastUtil.showSuccess(rootPane, "Database restored");
         else AlertUtil.showError("Restore Failed", "Check the file and MySQL bin path.");

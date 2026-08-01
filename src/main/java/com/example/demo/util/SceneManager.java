@@ -36,6 +36,7 @@ public class SceneManager {
             }
 
             primaryStage.setScene(scene);
+            primaryStage.setMaximized(false);
             primaryStage.show();
         } catch (IOException e) {
             e.printStackTrace();
