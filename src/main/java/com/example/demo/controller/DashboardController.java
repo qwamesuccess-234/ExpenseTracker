@@ -104,7 +104,7 @@ public class DashboardController {
                 String ownerCompany = (owner != null && owner.getCompanyName() != null) ? owner.getCompanyName() : "your organization";
                 companyNameLabel.setText(ownerCompany + " (Team Member)");
             } else {
-                companyNameLabel.setText(user.getCompanyName() != null ? user.getCompanyName() : "\u2014");
+                companyNameLabel.setText(user.getCompanyName() != null ? user.getCompanyName() : "—");
             }
         }
 
@@ -114,12 +114,22 @@ public class DashboardController {
 
         if (isEnterprise) {
             if (isTeamMember) {
-                teamActivityLabel.setText("Team member \u2013 expenses need approval");
+                teamActivityLabel.setText("Team member – expenses need approval");
+                // Team members should not see approvals button
+                approvalsNavButton.setVisible(false);
+                approvalsNavButton.setManaged(false);
             } else {
                 int ownerId = user.getId();
                 List<User> team = new UserRepo().findTeamMembers(ownerId);
                 teamActivityLabel.setText((team.size() + 1) + " member" + (team.size() == 0 ? "" : "s") + " on this account");
+                // Only owners can see and access approvals
+                approvalsNavButton.setVisible(true);
+                approvalsNavButton.setManaged(true);
             }
+        } else {
+            // Non-enterprise accounts should not see approvals button
+            approvalsNavButton.setVisible(false);
+            approvalsNavButton.setManaged(false);
         }
     }
 
