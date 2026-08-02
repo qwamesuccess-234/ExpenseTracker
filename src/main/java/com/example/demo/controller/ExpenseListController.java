@@ -149,7 +149,7 @@ public class ExpenseListController {
 
         if (file == null) return;
 
-       User currentUser = SessionManager.getCurrentUser();
+        User currentUser = SessionManager.getCurrentUser();
 
         try (FileWriter writer = new FileWriter(file)) {
 
@@ -185,6 +185,7 @@ public class ExpenseListController {
         if (file == null) return;
 
         int userId = SessionManager.getCurrentUser().getId();
+        User currentUser = SessionManager.getCurrentUser();
         int imported = 0;
 
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
@@ -217,7 +218,13 @@ public class ExpenseListController {
                             .orElse(null);
                     int categoryId = category != null ? category.getId() : 0;
 
-                    expenseService.addExpense(userId, categoryId, amount, description, date);
+                    String department = currentUser.getDepartment(); // or "N/A" if User has no such field
+                    // Same rule as AddExpenseController: team members' expenses need
+                    // owner approval; the account owner's own expenses auto-approve.
+                    boolean isTeamMember = currentUser.getOrganizationId() != null;
+                    String status = isTeamMember ? "Pending" : "Approved";
+
+                    expenseService.addExpense(userId, categoryId, amount, description, date, department, status);
                     imported++;
                 } catch (Exception ex) {
                     // skip malformed row

@@ -4,7 +4,6 @@ import com.example.demo.model.User;
 import com.example.demo.repo.UserRepo;
 import com.example.demo.service.BackupService;
 import com.example.demo.util.*;
-import com.google.protobuf.compiler.PluginProtos;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
@@ -12,9 +11,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.shape.Path;
 import javafx.stage.FileChooser;
 
 import java.io.File;
@@ -89,7 +86,7 @@ public class SettingsController {
         if (file == null) return;
 
         boolean success = backupService.restoreDatabase(
-                "C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin", "root", "Qwame123success3", "expense_db", file
+                "C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin", "root", "Qwame123success", "expense_db", file
         );
         if (success) ToastUtil.showSuccess(rootPane, "Database restored");
         else AlertUtil.showError("Restore Failed", "Check the file and MySQL bin path.");

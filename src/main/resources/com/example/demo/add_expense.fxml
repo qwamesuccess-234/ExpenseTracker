@@ -29,6 +29,9 @@
             <Label text="Category" style="-fx-font-size: 12px; -fx-text-fill: #8C919E;" />
             <ComboBox fx:id="categoryCombo" maxWidth="Infinity" promptText="Select category" />
 
+            <Label fx:id="departmentLabel" text="Department" style="-fx-font-size: 12px; -fx-text-fill: #8C919E;" visible="false" managed="false" />
+            <TextField fx:id="departmentField" promptText="e.g. Marketing, Sales" style="-fx-background-radius: 8; -fx-border-radius: 8; -fx-border-color: #E0E1E8; -fx-padding: 10;" visible="false" managed="false" />
+
             <Button text="Attach Receipt" onAction="#handleAttachReceipt" style="-fx-background-color: white; -fx-border-color: #E0E1E8; -fx-background-radius: 8; -fx-padding: 10;" />
             <Label fx:id="receiptLabel" style="-fx-font-size: 11px; -fx-text-fill: #8C919E;" />
 

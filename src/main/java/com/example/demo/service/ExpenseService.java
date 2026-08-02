@@ -10,7 +10,11 @@ public class ExpenseService {
 
     private final ExpenseRepo expenseRepo = new ExpenseRepo();
 
-    public boolean addExpense(int userId, int categoryId, double amount, String description, LocalDate date) {
+    public boolean addExpense(int userId, int categoryId, double amount, String description, LocalDate date, String department, String status) {
+        return addExpense(userId, categoryId, amount, description, date, department, status, null);
+    }
+
+    public boolean addExpense(int userId, int categoryId, double amount, String description, LocalDate date, String department, String status, String receiptPath) {
         if (amount <= 0) return false; // basic validation belongs here, not in controller
 
         Expense expense = new Expense();
@@ -19,6 +23,9 @@ public class ExpenseService {
         expense.setAmount(amount);
         expense.setDescription(description);
         expense.setDate(date);
+        expense.setDepartment(department);
+        expense.setApprovalStatus(status);
+        expense.setReceiptPath(receiptPath);
 
         return expenseRepo.save(expense);
     }

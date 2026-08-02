@@ -4,7 +4,6 @@ import com.example.demo.model.User;
 import com.example.demo.repo.UserRepo;
 import com.example.demo.util.SceneManager;
 import com.example.demo.util.ValidationUtil;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -93,7 +92,7 @@ public class RegisterController {
     @FXML
     private void individualSelected() {
         selectedUserType = "Individual";
-        highlightSelected(individuaButton);
+        highlightSelected(individualButton);
         toggleCompanyField(false);
     }
 
@@ -120,10 +119,10 @@ public class RegisterController {
 
 
     @FXML
-    private Button individuaButton, corporationButton, enterpriseButton;
+    private Button individualButton, corporationButton, enterpriseButton;
 
     private void highlightSelected(Button selected) {
-        for (Button b : new Button[]{individuaButton, corporationButton, enterpriseButton}) {
+        for (Button b : new Button[]{individualButton, corporationButton, enterpriseButton}) {
             b.setStyle("-fx-background-color: blue; -fx-background-radius: 8;");
         }
         selected.setStyle("-fx-background-color: #21B373; -fx-background-radius: 8;");

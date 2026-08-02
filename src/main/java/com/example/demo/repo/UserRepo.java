@@ -124,4 +124,26 @@ public class UserRepo {
         }
         return false;
     }
+    // For a team member: get their organization owner's info (company name, etc.)
+    public User findById(int id) {
+        String query = "SELECT id, name, email, phone, password, user_type, company_name, status, organization_id FROM users WHERE email = ?";
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                User u = new User();
+                u.setId(rs.getInt("id"));
+                u.setName(rs.getString("name"));
+                u.setEmail(rs.getString("email"));
+                u.setUserType(rs.getString("user_type"));
+                u.setCompanyName(rs.getString("company_name"));
+                u.setStatus(rs.getBoolean("status"));
+                u.setOrganizationId(rs.getObject("organization_id") != null ? rs.getInt("organization_id") : null);
+                return u;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

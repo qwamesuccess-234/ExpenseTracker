@@ -14,7 +14,6 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.StackPane;
-import javafx.scene.shape.Path;
 import javafx.stage.FileChooser;
 
 import java.io.File;
@@ -34,6 +33,8 @@ public class AddExpenseController {
     @FXML private Label errorLabel;
     @FXML private Label receiptLabel;
     @FXML private StackPane rootPane;
+    @FXML private Label departmentLabel;
+    @FXML private TextField departmentField;
 
     private final ExpenseService expenseService = new ExpenseService();
     private final CategoryRepo categoryRepo = new CategoryRepo();
@@ -66,7 +67,13 @@ public class AddExpenseController {
     public void initialize() {
         List<Category> categories = categoryRepo.findAll();
         categoryCombo.setItems(FXCollections.observableArrayList(categories));
-        datePicker.setValue(LocalDate.now()); // sensible default
+        datePicker.setValue(LocalDate.now());
+
+        boolean isBusiness = SessionManager.isBusinessAccount();
+        departmentLabel.setVisible(isBusiness);
+        departmentLabel.setManaged(isBusiness);
+        departmentField.setVisible(isBusiness);
+        departmentField.setManaged(isBusiness);//
     }
 
     @FXML
@@ -90,14 +97,18 @@ public class AddExpenseController {
         }
 
         int userId = SessionManager.getCurrentUser().getId();
-        boolean saved = expenseService.addExpense(userId, selectedCategory.getId(), amount, description, date);
+        String department = departmentField.getText();
 
+        // Team members' expenses need owner approval; owner's own expenses auto-approve
+        boolean isTeamMember = SessionManager.getCurrentUser().getOrganizationId() != null;
+        String status = isTeamMember ? "Pending" : "Approved";
+
+        boolean saved = expenseService.addExpense(userId, selectedCategory.getId(), amount, description, date, department, status, selectedReceiptPath);
 
         if (saved) {
-            ToastUtil.showSuccess(rootPane, "Expense added successfully");
+            String msg = isTeamMember ? "Expense submitted for approval" : "Expense added successfully";
+            ToastUtil.showSuccess(rootPane, msg);
             SceneManager.switchScene("dashboard.fxml");
-        } else {
-            ToastUtil.showError(rootPane, "Could not save expense");
         }
     }
 

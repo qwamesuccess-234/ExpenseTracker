@@ -94,4 +94,14 @@ public class User {
     public void setCompanyName(String companyName) {
         this.companyName = companyName;
     }
+
+    private String department;
+
+    public String getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
+    }
 }
