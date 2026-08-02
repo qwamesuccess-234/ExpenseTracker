@@ -30,7 +30,7 @@ public class UserRepo {
     }
 
     public User findByEmail(String email) {
-        String query = "SELECT id, name, email, phone, password, user_type, company_name, status FROM users WHERE email = ?";
+        String query = "SELECT id, name, email, phone, password, user_type, company_name, status, organization_id FROM users WHERE email = ?";
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setString(1, email);
             ResultSet rs = ps.executeQuery();
@@ -44,6 +44,7 @@ public class UserRepo {
                 user.setUserType(rs.getString("user_type"));
                 user.setCompanyName(rs.getString("company_name"));
                 user.setStatus(rs.getBoolean("status"));
+                user.setOrganizationId(rs.getObject("organization_id") != null ? rs.getInt("organization_id") : null);
                 return user;
             }
         } catch (SQLException e) {
@@ -124,9 +125,10 @@ public class UserRepo {
         }
         return false;
     }
+
     // For a team member: get their organization owner's info (company name, etc.)
     public User findById(int id) {
-        String query = "SELECT id, name, email, phone, password, user_type, company_name, status, organization_id FROM users WHERE email = ?";
+        String query = "SELECT id, name, email, phone, password, user_type, company_name, status, organization_id FROM users WHERE id = ?";
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
