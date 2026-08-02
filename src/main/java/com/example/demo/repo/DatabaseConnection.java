@@ -6,10 +6,10 @@ import java.sql.DriverManager;
 public class DatabaseConnection {
 
     private final String USERNAME = "root";
-    private final String PASSWORD ="Edmund@123";
+    private final String PASSWORD = "Qwame123success";
     private final String DRIVER = "com.mysql.cj.jdbc.Driver";
-    private final String DATABASE ="expense_db";
-    private final String URL = "jdbc:mysql://localhost:3306/"+ DATABASE;
+    private final String DATABASE = "expense_db";
+    private final String URL = "jdbc:mysql://localhost:3306/" + DATABASE;
 
 
     private Connection connection;
@@ -26,7 +26,7 @@ public class DatabaseConnection {
 
     public static  DatabaseConnection getInstance(){
         if(databaseConnection == null){
-                databaseConnection = new DatabaseConnection();
+            databaseConnection = new DatabaseConnection();
         }
         return databaseConnection;
     }

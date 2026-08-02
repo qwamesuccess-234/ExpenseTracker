@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.*?>
 
-<BorderPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="800" prefWidth="1200" style="-fx-background-color: #F5F6FA;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.controller.DashboardController">
+<BorderPane fx:id="rootPane" maxHeight="Infinity" maxWidth="Infinity" prefHeight="720" prefWidth="1350" style="-fx-background-color: #F5F6FA;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.controller.DashboardController">
 
     <left>
         <VBox prefWidth="260.0" spacing="6.0" style="-fx-background-color: #1C2130;">
@@ -19,6 +19,7 @@
                 <Button maxWidth="Infinity" onAction="#goToBudget" style="-fx-background-color: transparent; -fx-text-fill: #C0C2CB; -fx-alignment: CENTER_LEFT; -fx-padding: 12;" text="Budget" />
                 <Button maxWidth="Infinity" onAction="#goToReports" style="-fx-background-color: transparent; -fx-text-fill: #C0C2CB; -fx-alignment: CENTER_LEFT; -fx-padding: 12;" text="Reports" />
                 <Button maxWidth="Infinity" onAction="#goToCategories" style="-fx-background-color: transparent; -fx-text-fill: #C0C2CB; -fx-alignment: CENTER_LEFT; -fx-padding: 12;" text="Categories" />
+                <Button fx:id="approvalsNavButton" text="Approvals" maxWidth="Infinity" onAction="#goToApprovals" style="-fx-background-color: transparent; -fx-text-fill: #C0C2CB; -fx-alignment: CENTER_LEFT; -fx-padding: 12;" visible="false" managed="false" />
                 <Button maxWidth="Infinity" onAction="#goToSettings" style="-fx-background-color: transparent; -fx-text-fill: #C0C2CB; -fx-alignment: CENTER_LEFT; -fx-padding: 12;" text="Settings" />
                 <Region VBox.vgrow="ALWAYS" />
 
@@ -60,11 +61,13 @@
                             </children>
                         </VBox>
 
-                        <VBox fx:id="enterpriseStatsBox" prefHeight="100.0" spacing="8.0" style="-fx-background-color: white; -fx-background-radius: 14; -fx-padding: 18;">
+                        <VBox fx:id="enterpriseStatsBox" spacing="8.0" prefHeight="100.0"
+                              style="-fx-background-color: white; -fx-background-radius: 14; -fx-padding: 18;"
+                              onMouseClicked="#goToTeam">
                             <children>
-                                <Label style="-fx-font-size: 12px; -fx-text-fill: #8C919E;" text="Team Activity" />
+                                <Label text="Team Activity" style="-fx-font-size: 12px; -fx-text-fill: #8C919E;" />
                                 <Label fx:id="teamActivityLabel" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #1C2130;" />
-                                <Label style="-fx-font-size: 11px; -fx-text-fill: #21B373;" text="Enterprise Account" />
+                                <Label text="Click to manage team \u2192" style="-fx-font-size: 11px; -fx-text-fill: #3868F2;" />
                             </children>
                         </VBox>
                         <VBox prefHeight="100.0" prefWidth="230.0" spacing="8.0" style="-fx-background-color: white; -fx-background-radius: 14; -fx-padding: 18;">

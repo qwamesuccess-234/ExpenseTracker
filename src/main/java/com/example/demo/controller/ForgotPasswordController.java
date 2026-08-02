@@ -10,7 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
-public class ForgetPasswordController {
+public class ForgotPasswordController {
 
     @FXML private TextField emailField;
     @FXML private TextField phoneField;

@@ -12,6 +12,7 @@ import com.example.demo.util.ToastUtil;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -51,6 +52,7 @@ public class DashboardController {
     @FXML private Label sidebarNameLabel;
     @FXML private Label sidebarEmailLabel;
     @FXML private Label remainingLabel;
+    @FXML private Button approvalsNavButton;
 
     @FXML
     public void initialize() {
@@ -60,7 +62,6 @@ public class DashboardController {
         sidebarNameLabel.setText(user.getName());
         sidebarEmailLabel.setText(user.getEmail());
         loadProfileImage(user.getProfilePicturePath());
-        welcomeLabel.setText("Welcome back, " + SessionManager.getCurrentUser().getName());
 
         dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
         descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
@@ -76,7 +77,7 @@ public class DashboardController {
                 profileImageView.setImage(new Image(new File(path).toURI().toString()));
             } else {
                 // fallback placeholder avatar bundled in resources
-                InputStream defaultAvatar = getClass().getResourceAsStream("/com/example/demo/images/default_avatar.png");
+                InputStream defaultAvatar = getClass().getResourceAsStream("/com/example/demo/images/compass-logo.png");
                 if (defaultAvatar != null) {
                     profileImageView.setImage(new Image(defaultAvatar));
                 } else {
@@ -89,13 +90,22 @@ public class DashboardController {
     }
 
     private void applyRoleBasedVisibility() {
+        User user = SessionManager.getCurrentUser();
         boolean isBusiness = SessionManager.isBusinessAccount();
+        boolean isTeamMember = user.getOrganizationId() != null;
+
         corporateStatsBox.setVisible(isBusiness);
         corporateStatsBox.setManaged(isBusiness);
 
         if (isBusiness) {
-            String company = SessionManager.getCurrentUser().getCompanyName();
-            companyNameLabel.setText(company != null && !company.isEmpty() ? company : "\u2014");
+            if (isTeamMember) {
+                // This user was added to someone else's team — show whose
+                User owner = new UserRepo().findById(user.getOrganizationId());
+                String ownerCompany = (owner != null && owner.getCompanyName() != null) ? owner.getCompanyName() : "your organization";
+                companyNameLabel.setText(ownerCompany + " (Team Member)");
+            } else {
+                companyNameLabel.setText(user.getCompanyName() != null ? user.getCompanyName() : "—");
+            }
         }
 
         boolean isEnterprise = SessionManager.isEnterprise();
@@ -103,9 +113,23 @@ public class DashboardController {
         enterpriseStatsBox.setManaged(isEnterprise);
 
         if (isEnterprise) {
-            int ownerId = SessionManager.getOrganizationOwnerId();
-            List<User> team = new UserRepo().findTeamMembers(ownerId);
-            teamActivityLabel.setText((team.size() + 1) + " member" + (team.size() == 0 ? "" : "s") + " on this account");
+            if (isTeamMember) {
+                teamActivityLabel.setText("Team member – expenses need approval");
+                // Team members should not see approvals button
+                approvalsNavButton.setVisible(false);
+                approvalsNavButton.setManaged(false);
+            } else {
+                int ownerId = user.getId();
+                List<User> team = new UserRepo().findTeamMembers(ownerId);
+                teamActivityLabel.setText((team.size() + 1) + " member" + (team.size() == 0 ? "" : "s") + " on this account");
+                // Only owners can see and access approvals
+                approvalsNavButton.setVisible(true);
+                approvalsNavButton.setManaged(true);
+            }
+        } else {
+            // Non-enterprise accounts should not see approvals button
+            approvalsNavButton.setVisible(false);
+            approvalsNavButton.setManaged(false);
         }
     }
 
@@ -145,5 +169,16 @@ public class DashboardController {
     private void logout() {
         SessionManager.clear();
         SceneManager.switchScene("login.fxml");
+    }
+    @FXML
+    private void goToApprovals() {
+        SceneManager.switchScene("approvals.fxml");
+    }
+    @FXML
+    private void goToTeam() {
+        // Only the owner can manage the team, not a team member
+        if (SessionManager.getCurrentUser().getOrganizationId() == null) {
+            SceneManager.switchScene("team.fxml");
+        }
     }
 }

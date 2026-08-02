@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="800" prefWidth="1200"
+<StackPane maxHeight="Infinity" maxWidth="Infinity" prefHeight="720" prefWidth="1350"
            style="-fx-background-color: linear-gradient(to bottom right, #1C2130, #26314F);"
            xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1"
            fx:controller="com.example.demo.controller.RegisterController">
@@ -58,7 +58,7 @@
             </Label>
             <ButtonBar maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="40.0" prefWidth="380.0">
                 <buttons>
-                    <Button fx:id="individuaButton" mnemonicParsing="false" onAction="#individualSelected"
+                    <Button fx:id="individualButton" mnemonicParsing="false" onAction="#individualSelected"
                             prefHeight="31.0" prefWidth="115.0" style="-fx-background-color: #21B373; -fx-background-radius: 8;" text="Individual" textFill="WHITE">
                         <font><Font name="System Bold" size="12.0" /></font>
                     </Button>
