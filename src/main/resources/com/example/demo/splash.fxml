@@ -6,20 +6,27 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" spacing="14.0" maxHeight ="Infinity" maxWidth ="Infinity" prefHeight="720" prefWidth="1350"
-      style="-fx-background-color: linear-gradient(to bottom right, #1C2130, #26314F);"
-      xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.example.demo.controller.SplashController">
+<VBox fx:id="root"
+      alignment="CENTER"
+      spacing="18.0"
+      maxHeight ="-Infinity"
+      maxWidth ="-Infinity"
+      prefHeight="800"
+      prefWidth="1200"
+      xmlns="http://javafx.com/javafx/26"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.demo.controller.SplashController"
+      styleClass="splash-root">
 
-    <ImageView fitWidth="96.0" fitHeight="96.0" preserveRatio="true">
+    <ImageView fitWidth="96.0" fitHeight="96.0" preserveRatio="true" styleClass="logo-image">
         <image>
             <Image url="@images/logo.png" />
         </image>
     </ImageView>
 
-    <Label text="ExpenseTracker" style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: white;" />
-    <Label text="Track smarter. Spend wiser." style="-fx-font-size: 13px; -fx-text-fill: #8C919E;" />
+    <Label text="ExpenseTracker" styleClass="app-title" />
+    <Label text="Track smarter. Spend wiser." styleClass="app-subtitle" />
 
-    <ProgressBar prefWidth="200.0" style="-fx-accent: #3868F2;" />
+    <ProgressBar prefWidth="300.0" styleClass="splash-progress" />
 
 </VBox>
