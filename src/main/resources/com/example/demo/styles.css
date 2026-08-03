@@ -1,0 +1,71 @@
+/* Global / splash styles for ExpenseTracker */
+
+/* Palette */
+.root {
+    -fx-font-family: "Segoe UI", "Roboto", "Inter", system-ui, sans-serif;
+}
+
+/* Background for splash */
+.splash-root {
+    -fx-background-color: linear-gradient(to bottom right, #11151B 0%, #26314F 100%);
+    -fx-padding: 28;
+}
+
+/* Logo */
+.logo-image {
+    -fx-effect: dropshadow(gaussian, rgba(8,10,18,0.45), 12, 0, 0, 6);
+}
+
+/* Title and subtitle */
+.app-title {
+    -fx-font-size: 28px;
+    -fx-font-weight: 700;
+    -fx-text-fill: #FFFFFF;
+    -fx-effect: null;
+    -fx-padding: 6 0 0 0;
+}
+
+.app-subtitle {
+    -fx-font-size: 13px;
+    -fx-text-fill: #B7BCC6; /* slightly muted but readable */
+    -fx-padding: 2 0 0 0;
+}
+
+/* Progress bar styling */
+.splash-progress {
+    -fx-accent: #3F51B5; /* primary action color */
+    -fx-background-insets: 0;
+    -fx-background-radius: 8;
+    -fx-progress-color: derive(#3F51B5, 0%);
+    -fx-border-radius: 8;
+    -fx-padding: 6 0 0 0;
+}
+
+/* A subtle "card" look if later wrapping content */
+.card {
+    -fx-background-color: rgba(255,255,255,0.03);
+    -fx-background-radius: 10;
+    -fx-padding: 14;
+    -fx-effect: dropshadow(gaussian, rgba(2,6,23,0.28), 10, 0, 0, 4);
+}
+
+/* Buttons (for later use) */
+.button-primary {
+    -fx-background-color: #3F51B5;
+    -fx-text-fill: white;
+    -fx-background-radius: 8;
+    -fx-padding: 8 14;
+    -fx-font-weight: 600;
+}
+
+.button-primary:hover {
+    -fx-background-color: #3647a8;
+}
+
+.button-ghost {
+    -fx-background-color: transparent;
+    -fx-border-color: rgba(255,255,255,0.14);
+    -fx-text-fill: #FFFFFF;
+    -fx-border-radius: 8;
+    -fx-padding: 8 14;
+}

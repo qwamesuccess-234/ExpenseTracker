@@ -19,7 +19,11 @@ public class HelloApplication extends Application {
                 getClass().getResource("/com/example/demo/splash.fxml")
         );
 
-        Scene scene = new Scene(root);
+        Scene scene = new Scene(root, 920, 520);
+
+        // Attach the global stylesheet
+        scene.getStylesheets().add(getClass().getResource("/com/example/demo/styles.css").toExternalForm());
+
         stage.setTitle("ExpenseTracker");
         stage.setScene(scene);
         stage.setResizable(true);
