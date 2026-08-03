@@ -1,3 +1,5 @@
+package com.example.demo.controller;
+
 import com.example.demo.repo.CategoryRepo;
 import com.example.demo.service.ExpenseService;
 import com.example.demo.util.AlertUtil;

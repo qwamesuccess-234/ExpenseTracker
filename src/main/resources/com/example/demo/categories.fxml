@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="Infinity" maxWidth="Infinity" prefHeight="720" prefWidth="1350" style="-fx-background-color: #F5F6FA;"
+<BorderPane maxHeight="Infinity" maxWidth="Infinity" prefHeight="700" prefWidth="1300" style="-fx-background-color: #F5F6FA;"
             xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.example.demo.controller.CategoriesController">
 

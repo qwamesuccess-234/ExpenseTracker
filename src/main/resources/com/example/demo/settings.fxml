@@ -5,7 +5,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.Circle?>
-<BorderPane fx:id="rootPane" maxHeight="Infinity" maxWidth="Infinity" prefHeight="720" prefWidth="1350" style="-fx-background-color: #F5F6FA;"
+<BorderPane fx:id="rootPane" maxHeight="Infinity" maxWidth="Infinity" prefHeight="700" prefWidth="1300" style="-fx-background-color: #F5F6FA;"
             xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.example.demo.controller.SettingsController">
 
