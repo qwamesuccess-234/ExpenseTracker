@@ -130,8 +130,9 @@ public class AddExpenseController {
         boolean saved = expenseService.addExpense(userId, selectedCategory.getId(), amount, description, date, department, status, selectedReceiptPath, organizationId);
 
         if (saved) {
-            ToastUtil.show("Expense saved");
-            SceneManager.goBack();
+            // show success toast on the root pane and navigate back to the expense list
+            ToastUtil.showSuccess(rootPane, "Expense saved");
+            SceneManager.switchScene("expense_list.fxml");
         } else {
             errorLabel.setText("Could not save expense. Try again.");
         }
@@ -139,6 +140,6 @@ public class AddExpenseController {
 
     @FXML
     private void handleCancel() {
-        SceneManager.goBack();
+        SceneManager.switchScene("expense_list.fxml");
     }
 }
