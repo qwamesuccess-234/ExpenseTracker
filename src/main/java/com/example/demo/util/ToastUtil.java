@@ -56,4 +56,7 @@ public class ToastUtil {
         stay.setOnFinished(e -> fadeOut.play());
         fadeIn.play();
     }
+
+    public static void show(String expenseSaved) {
+    }
 }

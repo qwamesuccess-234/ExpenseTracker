@@ -6,7 +6,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" spacing="14.0" maxHeight ="Infinity" maxWidth ="Infinity" prefHeight="720" prefWidth="1350"
+<VBox alignment="CENTER" spacing="14.0" maxHeight ="Infinity" maxWidth ="Infinity" prefHeight="700" prefWidth="1300"
       style="-fx-background-color: linear-gradient(to bottom right, #1C2130, #26314F);"
       xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.example.demo.controller.SplashController">

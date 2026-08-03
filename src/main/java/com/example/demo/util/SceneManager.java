@@ -42,4 +42,9 @@ public class SceneManager {
             e.printStackTrace();
         }
     }
+
+    public static void goBack() {
+        switchScene("expense_list.fxml");
+
+    }
 }
