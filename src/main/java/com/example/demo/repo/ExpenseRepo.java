@@ -15,7 +15,7 @@ public class ExpenseRepo {
     }
 
     public boolean save(Expense expense) {
-        String query = "INSERT INTO expenses (user_id, category_id, amount, description, expense_date, department, approval_status, receipt_path) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO expenses (user_id, category_id, amount, description, expense_date, department, approval_status, organization_id, receipt_path) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setInt(1, expense.getUserId());
             ps.setInt(2, expense.getCategoryId());
@@ -24,7 +24,12 @@ public class ExpenseRepo {
             ps.setDate(5, Date.valueOf(expense.getDate()));
             ps.setString(6, expense.getDepartment());
             ps.setString(7, expense.getApprovalStatus());
-            ps.setString(8, expense.getReceiptPath());
+            if (expense.getOrganizationId() != null) {
+                ps.setInt(8, expense.getOrganizationId());
+            } else {
+                ps.setNull(8, Types.INTEGER);
+            }
+            ps.setString(9, expense.getReceiptPath());
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -62,7 +67,7 @@ public class ExpenseRepo {
         List<Expense> expenses = new ArrayList<>();
         String query = """
             SELECT e.id, e.user_id, e.category_id, c.name AS category_name,
-                   e.amount, e.description, e.expense_date, e.department, e.approval_status
+                   e.amount, e.description, e.expense_date, e.department, e.approval_status, e.organization_id
             FROM expenses e
             LEFT JOIN categories c ON e.category_id = c.id
             WHERE e.user_id = ?
@@ -84,11 +89,11 @@ public class ExpenseRepo {
         List<Expense> expenses = new ArrayList<>();
         String query = """
         SELECT e.id, e.user_id, e.category_id, c.name AS category_name,
-               e.amount, e.description, e.expense_date, e.department, e.approval_status
+               e.amount, e.description, e.expense_date, e.department, e.approval_status, e.organization_id
         FROM expenses e
         LEFT JOIN categories c ON e.category_id = c.id
         WHERE e.approval_status = 'Pending'
-        AND e.user_id IN (SELECT id FROM users WHERE organization_id = ?)
+        AND e.organization_id = ?
         ORDER BY e.expense_date DESC
         """;
         try (PreparedStatement ps = connection.prepareStatement(query)) {
@@ -126,6 +131,12 @@ public class ExpenseRepo {
         e.setDate(rs.getDate("expense_date").toLocalDate());
         e.setDepartment(rs.getString("department"));
         e.setApprovalStatus(rs.getString("approval_status"));
+        Object orgIdObj = rs.getObject("organization_id");
+        if (orgIdObj != null) {
+            e.setOrganizationId(rs.getInt("organization_id"));
+        } else {
+            e.setOrganizationId(null);
+        }
         return e;
     }
 
