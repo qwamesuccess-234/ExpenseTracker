@@ -8,8 +8,9 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.CheckBox?>
 
-<StackPane fx:id ="rootPane" maxHeight="Infinity" maxWidth="Infinity" prefHeight="720" prefWidth="1350" style="-fx-background-color: #F5F6FA;"
+<StackPane fx:id="rootPane" maxHeight="Infinity" maxWidth="Infinity" prefHeight="720" prefWidth="1350" style="-fx-background-color: #F5F6FA;"
            xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1"
            fx:controller="com.example.demo.controller.AddExpenseController">
 
@@ -31,6 +32,9 @@
 
             <Label fx:id="departmentLabel" text="Department" style="-fx-font-size: 12px; -fx-text-fill: #8C919E;" visible="false" managed="false" />
             <TextField fx:id="departmentField" promptText="e.g. Marketing, Sales" style="-fx-background-radius: 8; -fx-border-radius: 8; -fx-border-color: #E0E1E8; -fx-padding: 10;" visible="false" managed="false" />
+
+            <!-- New: allow user to choose whether this is a company expense or personal -->
+            <CheckBox fx:id="companyCheckbox" text="Company expense" />
 
             <Button text="Attach Receipt" onAction="#handleAttachReceipt" style="-fx-background-color: white; -fx-border-color: #E0E1E8; -fx-background-radius: 8; -fx-padding: 10;" />
             <Label fx:id="receiptLabel" style="-fx-font-size: 11px; -fx-text-fill: #8C919E;" />

@@ -22,6 +22,11 @@ public class RegisterController {
     @FXML
     private TextField phoneField;
 
+    @FXML private Label companyNameLabel;
+    @FXML private TextField companyNameField;
+
+    @FXML private Button individualButton, corporationButton, enterpriseButton;
+
     @FXML
     private void handleregister() {
         String email = emailField.getText();
@@ -56,7 +61,6 @@ public class RegisterController {
             return;
         }
 
-
         UserRepo userRepo = new UserRepo();
         if (userRepo.existByEmail(email)) {
             error_message_txt.setText("An account with this email already exists");
@@ -69,25 +73,17 @@ public class RegisterController {
         newUser.setName(name);
         newUser.setPhone(phone);
         newUser.setUserType(selectedUserType);
+        newUser.setCompanyName(companyName); // Set company name BEFORE saving
         newUser.setStatus(true);
 
         boolean saved = userRepo.save(newUser);
         if (saved) {
+            error_message_txt.setText(""); // Clear any errors
             SceneManager.switchScene("login.fxml");
         } else {
             error_message_txt.setText("Something went wrong. Try again.");
         }
-
-        if (!selectedUserType.equals("Individual") && companyName.isEmpty()) {
-            error_message_txt.setText("Company name is required for Corporation/Enterprise accounts");
-            return;
-        }
-
-        newUser.setCompanyName(companyName);
     }
-
-    @FXML private Label companyNameLabel;
-    @FXML private TextField companyNameField;
 
     @FXML
     private void individualSelected() {
@@ -117,19 +113,15 @@ public class RegisterController {
         companyNameField.setManaged(show);
     }
 
-
-    @FXML
-    private Button individualButton, corporationButton, enterpriseButton;
-
     private void highlightSelected(Button selected) {
         for (Button b : new Button[]{individualButton, corporationButton, enterpriseButton}) {
             b.setStyle("-fx-background-color: blue; -fx-background-radius: 8;");
         }
         selected.setStyle("-fx-background-color: #21B373; -fx-background-radius: 8;");
     }
+
     @FXML
     private void goToLogin() {
         SceneManager.switchScene("login.fxml");
     }
-
 }
