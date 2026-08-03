@@ -15,6 +15,9 @@ public class Expense {
 
     private String receiptPath;
 
+    // New: optional organization owner id (owner user id) for company expenses. Null for personal expenses.
+    private Integer organizationId;
+
     public String getReceiptPath() {
         return receiptPath;
     }
@@ -96,5 +99,13 @@ public class Expense {
 
     public void setApprovalStatus(String approvalStatus) {
         this.approvalStatus = approvalStatus;
+    }
+
+    public Integer getOrganizationId() {
+        return organizationId;
+    }
+
+    public void setOrganizationId(Integer organizationId) {
+        this.organizationId = organizationId;
     }
 }

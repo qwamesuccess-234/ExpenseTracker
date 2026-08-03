@@ -11,10 +11,15 @@ public class ExpenseService {
     private final ExpenseRepo expenseRepo = new ExpenseRepo();
 
     public boolean addExpense(int userId, int categoryId, double amount, String description, LocalDate date, String department, String status) {
-        return addExpense(userId, categoryId, amount, description, date, department, status, null);
+        return addExpense(userId, categoryId, amount, description, date, department, status, null, null);
     }
 
     public boolean addExpense(int userId, int categoryId, double amount, String description, LocalDate date, String department, String status, String receiptPath) {
+        return addExpense(userId, categoryId, amount, description, date, department, status, receiptPath, null);
+    }
+
+    // New overload that accepts optional organizationId for company expenses
+    public boolean addExpense(int userId, int categoryId, double amount, String description, LocalDate date, String department, String status, String receiptPath, Integer organizationId) {
         if (amount <= 0) return false; // basic validation belongs here, not in controller
 
         Expense expense = new Expense();
@@ -26,6 +31,7 @@ public class ExpenseService {
         expense.setDepartment(department);
         expense.setApprovalStatus(status);
         expense.setReceiptPath(receiptPath);
+        expense.setOrganizationId(organizationId);
 
         return expenseRepo.save(expense);
     }
